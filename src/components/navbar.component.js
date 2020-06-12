@@ -8,13 +8,13 @@ import logo from "../images/logo1.png";
 
 export default class Navbar extends Component {
     render() {
-        return ( // TODO add log in chack variable
+        return ( // TODO add log in check variable
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <Link to="/" class="navbar-brand">
-                    <img class="rounded" src={logo} width="30" height="30"/>
+                    <img class="rounded" src={logo} width="30" height="30" alt="Forum-App Logo"/>
                 </Link>
                 <Link to="/" className="navbar-brand">Forum-Web</Link>
-                <div className="collpase navbar-collapse">
+                <div className="collapse navbar-collapse">
                 </div>
                 {true ? <LoggedInNavbar /> : <LoggedOutNavbar />}
             </nav>
