@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import LoggedInNavbar from "./logged-in.navbar.component";
 import LoggedOutNavbar from "./logged-out.navbar.component";
