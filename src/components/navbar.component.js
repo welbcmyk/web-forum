@@ -15,8 +15,8 @@ export default class Navbar extends Component {
                 </Link>
                 <Link to="/" className="navbar-brand">Forum-Web</Link>
                 <div className="collapse navbar-collapse">
+                    {true ? <LoggedInNavbar /> : <LoggedOutNavbar />}
                 </div>
-                {true ? <LoggedInNavbar /> : <LoggedOutNavbar />}
             </nav>
         )
     }
