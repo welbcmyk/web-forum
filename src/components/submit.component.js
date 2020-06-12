@@ -1,4 +1,11 @@
 import React, { Component } from "react";
+import { BrowserRouter as Link } from "react-router-dom";
+import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "reactstrap";
 export default class HomeFeed extends Component {
   constructor(props) {
     super(props);
@@ -8,12 +15,20 @@ export default class HomeFeed extends Component {
       post_date: "",
       post_content: "",
       post_user: "",
+      dropdownOpen: false,
     };
 
     this.onSubmit = this.onSubmit.bind(this);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeContent = this.onChangeContent.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
+    this.toggle = this.toggle.bind(this);
+  }
+
+  toggle() {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen,
+    });
   }
 
   render() {
@@ -65,31 +80,30 @@ export default class HomeFeed extends Component {
   forums() {
     // TODO change forums functions to real function which gives all forum back in a dropdown menu
     return (
-      <>
-        <div class="btn-group">
-          <button
-            class="btn btn-secondary input-block-level dropdown-toggle"
-            type="button"
-            id="dropdownForums"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            All
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownForums">
-            <a class="dropdown-item" href="#">
-              Forum 1
-            </a>
-            <a class="dropdown-item" href="#">
-              Forum 2
-            </a>
-            <a class="dropdown-item" href="#">
-              Forum 3
-            </a>
-          </div>
-        </div>
-      </>
+      <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+        <DropdownToggle
+          caret
+          class="btn btn-secondary input-block-level dropdown-toggle"
+          type="button"
+          id="dropdownForums"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          All
+        </DropdownToggle>
+        <DropdownMenu class="dropdown-menu" aria-labelledby="dropdownForums">
+          <DropdownItem class="dropdown-item" href="/forum/forum1/submit">
+            Forum 1
+          </DropdownItem>
+          <DropdownItem class="dropdown-item" href="/forum/forum2/submit">
+            Forum 2
+          </DropdownItem>
+          <DropdownItem class="dropdown-item" href="/forum/forum3/submit">
+            Forum 3
+          </DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
     );
   }
   onSubmit(e) {
