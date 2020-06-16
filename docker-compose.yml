@@ -1,0 +1,48 @@
+version: '3'
+services:
+    client:
+        build:
+            context: ./client
+            dockerfile: Dockerfile
+        restart: always
+        image: client_img
+        ports:
+            - 3000:3000
+        container_name: client
+        stdin_open: true
+        links:
+            - backend
+        networks: 
+            - mynetwork
+    backend:
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+        restart: always
+        image: backend_img
+        working_dir: /backend
+        ports:
+            - 5000:5000
+        container_name: backend
+        depends_on: 
+            - mongodb
+        networks: 
+            - mynetwork
+    mongodb:
+        image: mongo
+        restart: always
+        container_name: mongodb
+        environment: 
+            - MONGO_INITDB_DATABASE=forum-web-app
+            - MONGO_INITDB_ROOT_USERNAME=root
+            - MONGO_INITDB_ROOT_PASSWORD=root
+        volumes: 
+            - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+            - ./data/db:/data/db
+        ports:
+            - 27017:27017
+        networks: 
+            - mynetwork
+networks: 
+    mynetwork:
+        driver: bridge
