@@ -6,7 +6,8 @@ const postSchema = new Schema({
     user: {type: Schema.Types.ObjectId, ref: 'User'},
     title: {type: String, required: true},
     body: {type: String, required: true},
-    forum: {type: Schema.Types.ObjectId, ref: 'Forum'}
+    forum: {type: Schema.Types.ObjectId, ref: 'Forum'},
+    date: {type: Date, default: Date.now}
 }, {
     timestamps: true
 })
