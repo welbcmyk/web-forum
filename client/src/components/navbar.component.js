@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import LoggedInNavbar from "./logged-in.navbar.component";
-import LoggedOutNavbar from "./logged-out.navbar.component";
-import SearchBar from "./search-bar.component";
+import LoggedInNavbar from "./sub/logged-in.navbar.component";
+import LoggedOutNavbar from "./sub/logged-out.navbar.component";
+import SearchBar from "./sub/search-bar.component";
 
 import logo from "../images/logo1.png";
 

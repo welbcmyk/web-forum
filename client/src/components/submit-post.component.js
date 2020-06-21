@@ -6,6 +6,22 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
+
+const mockupForums = [
+  {
+    _id = 1,
+    name: Foo1,
+  },
+  {
+    _id = 2,
+    name: Foo2,
+  },
+  {
+    _id = 3,
+    name: Foo3,
+  }
+]
+
 export default class HomeFeed extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +31,7 @@ export default class HomeFeed extends Component {
       post_date: "",
       post_content: "",
       post_user: "",
+      post_forum: "",
       dropdownOpen: false,
     };
 
@@ -48,7 +65,7 @@ export default class HomeFeed extends Component {
         <br />
         <div class="row">
           <div class="col-md-1"></div>
-          <div class="dropdown col-md">{this.forums()}</div>
+          <div class="dropdown col-md">{this.getForums()}</div>
           <div class="col-md"></div>
           <div class="col-md"></div>
         </div>
@@ -77,7 +94,13 @@ export default class HomeFeed extends Component {
     );
   }
 
-  forums() {
+  FourmsAsDropDownItems(forums) {
+    return forums.map(function(forum) {
+      <DropdownItem class="dropdown-item" href={'/forum/submit/' + forum.name} key = {forum._id}>{forum.name}</DropdownItem>
+    })
+  }
+
+  getForums() {
     // TODO change forums functions to real function which gives all forum back in a dropdown menu
     return (
       <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
@@ -93,15 +116,7 @@ export default class HomeFeed extends Component {
           All
         </DropdownToggle>
         <DropdownMenu class="dropdown-menu" aria-labelledby="dropdownForums">
-          <DropdownItem class="dropdown-item" href="/forum/forum1/submit">
-            Forum 1
-          </DropdownItem>
-          <DropdownItem class="dropdown-item" href="/forum/forum2/submit">
-            Forum 2
-          </DropdownItem>
-          <DropdownItem class="dropdown-item" href="/forum/forum3/submit">
-            Forum 3
-          </DropdownItem>
+          
         </DropdownMenu>
       </Dropdown>
     );
