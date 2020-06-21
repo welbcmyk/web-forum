@@ -29,18 +29,44 @@ router.route('/:id').get((req, res) => {
       .then(forum => res.json(forum))
       .catch(err => res.status(400).json('Error: ' + err));
   });
+
+router.route('/name/:name').get((req, res) => {
+    Forum.findById({name: req.params.name})
+      .then(forum => res.json(forum))
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
   
 router.route('/:id').delete((req, res) => {
     Forum.findByIdAndDelete(req.params.id)
       .then(() => res.json('Forum deleted.'))
       .catch(err => res.status(400).json('Error: ' + err));
   });
+  
+  router.route('/name/:name').delete((req, res) => {
+      Forum.findByIdAndDelete({name: req.params.name})
+        .then(() => res.json('Forum deleted.'))
+        .catch(err => res.status(400).json('Error: ' + err));
+    });
 
   router.route('/update/:id').post((req, res) => {
     Forum.findById(req.params.id)
       .then(forum => {
         forum.user = req.body.username;
         forum.name = req.body.name;
+        forum.description = req.body.description;
+        forum.date = Date.parse(req.body.date);
+  
+        forum.save()
+          .then(() => res.json('Forum updated!'))
+          .catch(err => res.status(400).json('Error: ' + err));
+      })
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
+
+  router.route('/update/name/:name').post((req, res) => {
+    Forum.findById({name: req.params.name})
+      .then(forum => {
+        forum.user = req.body.username;
         forum.description = req.body.description;
         forum.date = Date.parse(req.body.date);
   
