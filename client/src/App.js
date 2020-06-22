@@ -5,14 +5,14 @@ import HomeFeed from "./components/home-feed.component";
 import UserFeed from "./components/user-feed.component";
 import ForumFeed from "./components/forum-feed.component";
 import Submit from "./components/submit-post.component";
-import Navbar from "./components/navbar.component";
+import NavbarComp from "./components/navbar.component";
 
 class App extends Component {
   render() { // todo search
     return (
       <Router>
         <div className="container">
-          <Navbar />
+          <NavbarComp isLoggedIn={true}/>
           <br />
           <Route path="/" exact component={HomeFeed} />
           <Route path="/user/:name" exact component={UserFeed} />
