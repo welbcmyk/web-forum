@@ -9,16 +9,16 @@ import {
 
 const mockupForums = [
   {
-    _id = 1,
-    name: Foo1,
+    _id: 1,
+    name: "Foo1",
   },
   {
-    _id = 2,
-    name: Foo2,
+    _id: 2,
+    name: "Foo2",
   },
   {
-    _id = 3,
-    name: Foo3,
+    _id: 3,
+    name: "Foo3",
   }
 ]
 
@@ -50,54 +50,14 @@ export default class HomeFeed extends Component {
 
   render() {
     return (
-      <div class="card container">
-        <br />
-        <div class="input-group row">
-          <div class="col-md-1"></div>
-          <input
-            type="text"
-            class="form-control rounded col-md-6"
-            placeholder="Search for Forum"
-            aria-label="Forum"
-            aria-describedby="basic-addon1"
-          ></input>
-        </div>
-        <br />
-        <div class="row">
-          <div class="col-md-1"></div>
-          <div class="dropdown col-md">{this.getForums()}</div>
-          <div class="col-md"></div>
-          <div class="col-md"></div>
-        </div>
-        <br />
-        <div class="form-group row">
-          <div class="col-md-1"></div>
-          <input
-            class="form-control col-md-8"
-            placeholder="Header"
-            rows="2"
-            id="post_header"
-          ></input>
-        </div>
-        <br />
-        <div class="form-group row">
-          <div class="col-md-1"></div>
-          <textarea
-            class="form-control col-md-10"
-            placeholder="Body"
-            rows="5"
-            id="post_body"
-          ></textarea>
-        </div>
-        <br />
-      </div>
+      ""
     );
   }
 
   FourmsAsDropDownItems(forums) {
     return forums.map(function(forum) {
-      <DropdownItem class="dropdown-item" href={'/forum/submit/' + forum.name} key = {forum._id}>{forum.name}</DropdownItem>
-    })
+        return (<DropdownItem class="dropdown-item" href={'/forum/submit/' + forum.name} key = {forum._id}>{forum.name}</DropdownItem>);
+      });
   }
 
   getForums() {

@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { Navbar, Nav, NavItem, NavDropdown, Form, Button } from 'react-bootstrap';
-
-//import LoggedInNavbar from "./sub/logged-in.navbar.sub.component";
-//import LoggedOutNavbar from "./sub/logged-out.navbar.sub.component";
-//import SearchBar from "./sub/search-bar.sub.component";
+import {authenticationService} from "../services/authentication.service";
+import { withRouter } from 'react-router-dom';
 
 import logo from "../images/logo1.png";
 
@@ -56,7 +54,22 @@ function SearchBar(props) {
     </Form>
   );
 }
-export default class NavbarComp extends Component {
+class NavbarComp extends Component {
+  constructor(props) {
+    super(props);
+    this.logUserOut = this.logUserOut.bind(this);
+    this.loggedIn = this.loggedIn.bind(this);
+  }
+
+  loggedIn(){
+    return authenticationService.currentUserValue;
+  }
+
+  logUserOut() {
+    authenticationService.logout();
+    this.props.history.push("/login")
+  }
+
   render() {
     return (
       // TODO add log in check variable
@@ -75,11 +88,15 @@ export default class NavbarComp extends Component {
         </Navbar.Brand>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            {this.props.isLoggedIn ? <CreatePost /> : ""}
-            {this.props.isLoggedIn ? <Profil username="test"/> : "" /* TODO change name */}
-            {this.props.isLoggedIn ? <Settings /> : ""}
-            {!this.props.isLoggedIn ? <LogIn /> : ""}
-            {!this.props.isLoggedIn ? <SignUp /> : ""}
+            {this.loggedIn() ? <CreatePost /> : ""}
+            {this.loggedIn() ? <Profil username={authenticationService.currentUserValue.username}/> : "" /* TODO change name */}
+            {this.loggedIn() ? <Settings /> : ""}
+            {this.loggedIn() ? 
+              <Nav.Item onClick={this.logUserOut}>
+                <Nav.Link>Log Out</Nav.Link>
+              </Nav.Item>  : ""}
+            {!this.loggedIn() ? <LogIn /> : ""}
+            {!this.loggedIn() ? <SignUp /> : ""}
           </Nav>
           <SearchBar value={""} onSearch={ () => { return console.log()} /* TODO add xorrect function*/}/>
         </Navbar.Collapse>
@@ -87,3 +104,5 @@ export default class NavbarComp extends Component {
     );
   }
 }
+
+export default withRouter(NavbarComp);

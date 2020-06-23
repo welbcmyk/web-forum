@@ -1,16 +1,16 @@
 import React from "react";
 import { Form, Button } from 'react-bootstrap';
 
-function ForumInfo(props) {
+function SignUpComp(props) {
     return (
         <Form onSubmit={props.handleSubmit}>
             <Form.Group>
                 <Form.Label>Username</Form.Label>
                 <Form.Control
-                type="email"
-                placeholder="E-Mail"
-                value={props.email}
-                onChange={props.handleEmailChange}
+                type="name"
+                placeholder="Username"
+                value={props.username}
+                onChange={props.handleUsernameChange}
                 ></Form.Control>
             </Form.Group>
             <br/>
@@ -29,7 +29,7 @@ function ForumInfo(props) {
                 <Form.Control
                 type="password"
                 placeholder="Password"
-                value={props.email}
+                value={props.password}
                 onChange={props.handlePasswordChange}
                 ></Form.Control>
             </Form.Group>
@@ -38,9 +38,9 @@ function ForumInfo(props) {
                 Sign Up
             </Button>
             <br/>
-            <Form.Label class="text-danger">{props.SubmitError}</Form.Label>
+            <Form.Label readOnly class="text-danger">{props.SubmitError}</Form.Label>
         </Form>
     );
 }
 
-export default ForumInfo;
+export default SignUpComp;
