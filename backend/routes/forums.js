@@ -51,8 +51,21 @@ router.route('/:id').delete((req, res) => {
   router.route('/update/:id').post((req, res) => {
     Forum.findById(req.params.id)
       .then(forum => {
-        forum.user = req.body.username;
+        forum.user = req.body.user;
         forum.name = req.body.name;
+        forum.description = req.body.description;
+  
+        forum.save()
+          .then(() => res.json('Forum updated!'))
+          .catch(err => res.status(400).json('Error: ' + err));
+      })
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
+
+  router.route('/update/name/:name').post((req, res) => {
+    Forum.find({name: req.params.name})
+      .then(forum => {
+        forum.user = req.body.user;
         forum.description = req.body.description;
         forum.date = Date.parse(req.body.date);
   
@@ -63,18 +76,14 @@ router.route('/:id').delete((req, res) => {
       .catch(err => res.status(400).json('Error: ' + err));
   });
 
-  router.route('/update/name/:name').post((req, res) => {
-    Forum.findById({name: req.params.name})
-      .then(forum => {
-        forum.user = req.body.username;
-        forum.description = req.body.description;
-        forum.date = Date.parse(req.body.date);
-  
-        forum.save()
-          .then(() => res.json('Forum updated!'))
-          .catch(err => res.status(400).json('Error: ' + err));
-      })
-      .catch(err => res.status(400).json('Error: ' + err));
-  });
+  router.route('/check/:name').get((req, res) => {
+    Forum.find({name: req.params.name})
+    .then(forum => {
+      res.json({isAvailable: false});
+    })
+    .catch(err => {
+      res.json({isAvailable: true});
+    })
+  })
   
 module.exports = router;

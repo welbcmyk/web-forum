@@ -23,7 +23,11 @@ const forumsRoute = require('./routes/forums');
 app.use('/users', usersRoute);
 app.use('/posts', postsRoute);
 app.use('/comments', commentsRoute);
-app.use('/forums', forumsRoute);
+app.use('/forum', forumsRoute);
+app.use('/user', usersRoute);
+app.use('/post', postsRoute);
+app.use('/comment', commentsRoute);
+app.use('/forum', forumsRoute);
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);

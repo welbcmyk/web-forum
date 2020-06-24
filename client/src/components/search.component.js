@@ -60,7 +60,7 @@ export default class Search extends Component {
             console.log(error);
             forumName = "[deleted]";
           });
-          axios.get(backendAddress() + "/post/commentCount/" + currentPost._id)
+          axios.get(backendAddress() + "/comments/commentCount/" + currentPost._id)
           .then(response => {
             commentCount = response.data.count;
           })

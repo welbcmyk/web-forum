@@ -93,7 +93,7 @@ export default class SignUp extends Component {
 
     validateUsername() {
         const isAvailable = false;
-        axios.get(backendAddress() + "/check/username/" + this.state.username)
+        axios.get(backendAddress() + "/username/check/" + this.state.username)
         .then(res => isAvailable = res.data.isAvailable)
         .catch(error => {
             console.log(error);

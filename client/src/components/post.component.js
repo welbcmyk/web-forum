@@ -34,7 +34,7 @@ export default class HomeFeed extends Component {
   }
 
   componentDidMount() {
-    axios.get(backendAddress() + '/post/' + this.props.match.params.id)
+    axios.get(backendAddress() + '/posts/' + this.props.match.params.id)
     .then(response => {
       this.setState({
         id: response.data._id,

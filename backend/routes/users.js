@@ -54,7 +54,6 @@ router.route('/').get((req, res) => {
         user.username = req.body.username;
         user.email = req.body.email;
         user.password = req.body.password;
-        user.date = Date.parse(req.body.date);
   
         user.save()
           .then(() => res.json('User updated!'))
@@ -76,5 +75,15 @@ router.route('/').get((req, res) => {
       })
       .catch(err => res.status(400).json('Error: ' + err));
   });
+
+  router.route('/check/:name').get((req, res) => {
+    User.find({name: req.params.name})
+    .then(user => {
+      res.json({isAvailable: false});
+    })
+    .catch(err => {
+      res.json({isAvailable: true});
+    })
+  })
   
   module.exports = router;

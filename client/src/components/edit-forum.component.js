@@ -33,7 +33,7 @@ export default class EditForumPage extends Component {
     }
 
     componentDidMount() {
-        axios.get(backendAddress() + "/forum/name/" + this.props.match.params.name)
+        axios.get(backendAddress() + "/forums/name/" + this.props.match.params.name)
         .then(res => {
             if(authenticationService.currentUserValue._id != res.data.user) {
                 this.invalidRequest();
@@ -110,7 +110,7 @@ export default class EditForumPage extends Component {
         const isAvailable = false;
         if(this.state.name != this.state.oldname)
         {
-            axios.get(backendAddress() + "/check/forum/" + this.state.name)
+            axios.get(backendAddress() + "/forums/check/" + this.state.name)
             .then(res => isAvailable = res.data.isAvailable)
             .catch(error => {
                 console.log(error);

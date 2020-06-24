@@ -45,7 +45,6 @@ router.route('/add').post((req, res) => {
         post.title = req.body.title;
         post.body = req.body.body;
         post.forum = req.body.forum;
-        post.date = Date.parse(req.body.date);
   
         post.save()
           .then(() => res.json('Post updated!'))

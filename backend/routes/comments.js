@@ -35,7 +35,6 @@ router.route('/update/:id').post((req, res) => {
       comment.user = req.body.user;
       comment.body = req.body.body;
       comment.post = req.body.post;
-      comment.date = Date.parse(req.body.date);
 
       comment.save()
         .then(() => res.json('Comment updated!'))
@@ -54,6 +53,16 @@ router.route('/post/:id').get((req, res) => {
     Comment.find({post: req.params.id})
     .then(comments => res.json(comments))
     .catch(err => res.status(400).json('Error: ' + err))
+});
+
+router.route("/commentCount/:postid").get(function(req, res) {
+  detail.count({post: req.params.postid}, function(err, result) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json({count: result});
+    }
+  });
 });
 
 module.exports = router;

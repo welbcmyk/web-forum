@@ -115,7 +115,7 @@ class NavbarComp extends Component {
   }
 
   deleteAccount() {
-    axios.delete(backendAddress() + '/user/name/'+authenticationService.currentUserValue.username)
+    axios.delete(backendAddress() + '/users/name/'+authenticationService.currentUserValue.username)
       .then(response => { console.log(response.data)})
       .error(() => { console.log("Something went wrong")});
 
