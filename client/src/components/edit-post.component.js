@@ -5,7 +5,7 @@ import EditPost from "./sub/edit-post.sub.component";
 import backendAddress from "../helpers/backend-address";
 import { authenticationService } from "../services";
 
-export default class SubmitPost extends Component {
+export default class EditPostPage extends Component {
   constructor(props) {
     super(props);
     
@@ -17,6 +17,7 @@ export default class SubmitPost extends Component {
     this.validateTitle = this.validateTitle.bind(this);
     this.validateBody = this.validateBody.bind(this);
     this.validateForum = this.validateForum.bind(this);
+    this.invalidRequest = this.invalidRequest.bind(this);
 
     this.state = {
       forums: [],
@@ -25,8 +26,16 @@ export default class SubmitPost extends Component {
       userid: "",
       forumid: "",
       dropdownOpen: false,
-      submitError: ""
+      submitError: "",
+      postid: ""
     };
+  }
+
+  invalidRequest() {
+      /*this.props.history.push("/");*/
+      this.setState({
+          submitError: "Permission denied"
+      })
   }
 
   toggle() {
@@ -36,49 +45,73 @@ export default class SubmitPost extends Component {
   }
 
   componentDidMount() {
-    return (
-      axios.get(backendAddress() + '/forums')
-      .then(response => {
+    axios.get(backendAddress() + '/forums')
+    .then(response => {
+      this.setState({
+        forums: response.data,
+      })
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+    axios.get(backendAddress() + "/posts/" + this.props.match.params.id)
+    .then(res => {
+        if(authenticationService.currentUserValue._id != res.data.user) {
+            this.invalidRequest();
+        }
         this.setState({
-          forums: response.data,
+            userid: res.data.user,
+            title:res.data.title,
+            body: res.data.body,
+            postid: res.data._id,
+            forumid: res.data.forum,
         })
-      })
-      .catch((error) => {
+    })
+    .catch(error => {
         console.log(error);
-      })
-    );
+        this.invalidRequest();
+    })
   }
   onSubmit(e) {
     e.preventDefault();
+
     this.setState({
         submitError: ""
     });
+    if(authenticationService.currentUserValue._id != this.state.userid) {
+        this.invalidRequest();
+        return;
+    }
+
     if(!this.validateForum()){
       this.setState({
         submitError: "No valid forum selected."
-      })
+      });
+      return;
     }
 
     if(!this.validateTitle()){
       this.setState({
         submitError: "Please enter a title."
-      })
+      });
+      return;
     }
 
     if(!this.validateBody()){
       this.setState({
         submitError: "Please enter content."
-      })
+      });
+      return;
     }
     const post = {
       user: this.state.userid,
       forum: this.state.forumid,
       title: this.state.title,
-      body: this.state.body,
-      date: Date.now()
+      body: this.state.body
     }
 
-    axios.post(backendAddress() + "/posts/add", post)
+    axios.post(backendAddress() + "/posts/update/" + this.state.postid, post)
     .then(res => {
       console.log(res.data);
       this.props.history.push("/");

@@ -1,11 +1,111 @@
 import React, { Component } from "react";
+import axios from 'axios';
 
-export default class UserFeed extends Component {
+import PostComp from "./sub/post.sub.component";
+import backendAddress from "../helpers/backend-address";
+import { authenticationService } from "../services/authentication.service";
+import EmptyPage from "./sub/empty.sub.component";
+import UserInfo from "./sub/user-info.sub.component";
+import UserNotFound from "./sub/UserNotFound.sub.component";
+
+export default class HomeFeed extends Component {
+  constructor(props) {
+    super(props);
+
+    this.postList = this.postList.bind(this);
+    this.editPost = this.editPost.bind(this);
+    this.showPost = this.showPost.bind(this);
+
+    this.state = {
+      posts: [],
+      username: "",
+      id: "",
+      joinDate: ""
+    }
+  }
+
+  componentDidMount() {
+    axios.get(backendAddress() + '/user/' + this.props.match.params.name)
+    .then(response => {
+      this.setState({
+        username: response.data.username,
+        id: response.data._id,
+        joinDate: response.data.data
+      })
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+
+    axios.get(backendAddress() + '/posts/user/' + this.props.match.params.name)
+    .then(response => {
+      this.setState({
+        posts: response.data,
+      })
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  }
+
+  editPost(id) {
+    this.props.history.push("/post/edit/" + id);
+  }
+
+  showPost(id) {
+    this.props.history.push("/post/" + id);
+  }
+
+  postList() {
+    return this.state.posts.map(currentPost => {
+      const forumName = "";
+      const commentCount = 0;
+      axios.get(backendAddress() + "/forum/" + currentPost.forum)
+      .then(response => {
+        forumName = response.data.name
+      })
+      .catch((error) => {
+        console.log(error);
+        forumName = "[deleted]";
+      });
+      axios.get(backendAddress() + "/post/commentCount/" + currentPost._id)
+      .then(response => {
+        commentCount = response.data.count;
+      })
+      .catch((error) => {
+        console.log(error);
+        commentCount = 0;
+      });
+      return (
+        <PostComp 
+        key={currentPost._id} 
+        subTitle={this.state.username + " " + forumName}
+        date={currentPost.date} 
+        title={currentPost.title}
+        body={currentPost.body}
+        commentCount={commentCount}
+        showEdit={authenticationService.currentUserValue}
+        showDelete={false}
+        onPostEdit={this.editPost(currentPost._id)}
+        onClickPost={this.showPost(currentPost._id)}
+        />
+      )
+    });
+  }
+  
   render() {
     return (
-      <div>
-        <p>Welcome User Feed</p>
-      </div>
+      <>
+        {this.state.username === "" ? <UserNotFound /> : 
+        <>
+          <div class="container">
+            <UserInfo name={this.state.username} joinedDate={this.state.joinDate} />
+          </div>
+          <div class="container">
+            {this.postList().length > 0 ? this.postList() : <EmptyPage />}
+          </div>
+        </>}
+      </>
     );
   }
 }

@@ -2,6 +2,9 @@ import React, { Component }  from "react";
 import axios from 'axios';
 import SignUpComp from "./sub/Sign-Up.sub.component";
 
+import backendAddress from "../helpers/backend-address";
+import {authenticationService} from "../services/authentication.service";
+
 export default class SignUp extends Component {
     constructor(props) {
         super(props);
@@ -53,7 +56,7 @@ export default class SignUp extends Component {
         
         if(!this.validateUsername()){
             this.setState({
-                SubmitError: "Please enter a Username."
+                SubmitError: this.state.username + " is not available."
             });
             return;
         }
@@ -75,12 +78,28 @@ export default class SignUp extends Component {
             password: this.state.password,
             date: Date.now(),
         }
-        console.log(user); //TODO send to backend
-        this.props.history.push("/");
+        axios.post(backendAddress() + "/user/add", user)
+        .then(res => {
+            console.log(res.data);
+            this.props.history.push("/login");
+        })
+        .catch(error => {
+            console.log(error);
+            this.setState({
+                SubmitError: "Something went wrong."
+            })
+        })
     }
 
     validateUsername() {
-        return this.state.username.length > 0;
+        const isAvailable = false;
+        axios.get(backendAddress() + "/check/username/" + this.state.username)
+        .then(res => isAvailable = res.data.isAvailable)
+        .catch(error => {
+            console.log(error);
+            isAvailable = false;
+        })
+        return this.state.username.length > 0 && isAvailable;
     }
 
     validatePassword() {

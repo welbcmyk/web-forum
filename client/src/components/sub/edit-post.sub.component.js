@@ -4,7 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 const forums = (forums) => {
     return forums.map((forum) => {
         return(
-            <option key={forum._id}>{forum.name}</option>
+            <option value={forum._id}>{forum.name}</option>
         )
     });
 }

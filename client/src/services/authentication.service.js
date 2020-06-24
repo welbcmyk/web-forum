@@ -1,5 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 import axios from 'axios';
+import backendAddress from "../helpers/backend-address";
 
 import { handleResponse } from '../helpers';
 
@@ -19,7 +20,7 @@ function login(username, password) {
         body: JSON.stringify({ username, password })
     };
 
-    return axios.post('http://localhost:5000/login', JSON.stringify({ username, password }))
+    return axios.post(backendAddress()+'/login', JSON.stringify({ username, password }))
         .then(handleResponse)
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
