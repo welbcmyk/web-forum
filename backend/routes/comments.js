@@ -45,13 +45,13 @@ router.route('/update/:id').post((req, res) => {
 });
 
 router.route('/user/:id').get((req, res) => {
-    Comment.findById({user: req.params.id})
+    Comment.find({user: req.params.id})
     .then(comments => res.json(comments))
     .catch(err => res.status(400).json('Error: ' + err))
 });
 
 router.route('/post/:id').get((req, res) => {
-    Comment.findById({post: req.params.id})
+    Comment.find({post: req.params.id})
     .then(comments => res.json(comments))
     .catch(err => res.status(400).json('Error: ' + err))
 });

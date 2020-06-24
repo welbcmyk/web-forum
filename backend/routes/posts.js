@@ -55,13 +55,13 @@ router.route('/add').post((req, res) => {
   });
 
   router.route('/user/:id').get((req, res) => {
-      Post.findById({user: req.params.id})
+      Post.find({user: req.params.id})
       .then(posts => res.json(posts))
       .catch(err => res.status(400).json('Error: ' + err))
   });
   
   router.route('/forum/:id').get((req, res) => {
-      Post.findById({forum: req.params.id})
+      Post.find({forum: req.params.id})
       .then(posts => res.json(posts))
       .catch(err => res.status(400).json('Error: ' + err))
   });
