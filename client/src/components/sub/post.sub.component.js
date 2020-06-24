@@ -3,13 +3,14 @@ import React from "react";
 function Post (props) {
   return (
     <Link to={"/post/" + props.key}>
-      <span class="text-muted small">{props.userName} {props.date}</span>
+      <span class="text-muted small">{props.subTitle} {props.date}</span>
       <h1>{props.title}</h1>
       <br/>
       <div>{props.body}</div>
       <div class="d-flex justify-content-between">
         <div class="text-mute">{props.commentCount} Comments</div>
-        <div>{props.ownComment ? <Link to={"/post/edit/" + props.key} class="fa fa-pencil"></Link> : ""}</div>
+        <div>{props.ownPost ? <div onClick={props.onPostEdit} class="fa fa-pencil"></div> : ""}</div>
+        <div>{props.ownPost ? <div onClick={props.onPostDelete} class="bi bi-trash"></div> : ""}</div>
       </div>
     </Link>
   );
