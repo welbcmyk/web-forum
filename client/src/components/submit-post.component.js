@@ -78,7 +78,7 @@ export default class SubmitPost extends Component {
       date: Date.now()
     }
 
-    axios.post(backendAddress() + "/posts/add", post)
+    axios.post(`${backendAddress()}/posts/add`, post)
     .then(res => {
       console.log(res.data);
       this.props.history.push("/");

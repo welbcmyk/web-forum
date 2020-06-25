@@ -49,7 +49,7 @@ export default class CreateComment extends Component {
             date: Date.now()
         }
 
-        axios.post(backendAddress() + "/comments/add", comment)
+        axios.post( `${backendAddress()}/comments/add`, comment)
         .then(res => {
             console.log(res.data);
             this.props.history.push("/");

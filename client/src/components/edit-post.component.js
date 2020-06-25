@@ -55,7 +55,7 @@ export default class EditPostPage extends Component {
       console.log(error);
     });
 
-    axios.get(backendAddress() + "/posts/" + this.props.match.params.id)
+    axios.get(`${backendAddress()}/posts/` + this.props.match.params.id)
     .then(res => {
         if(authenticationService.currentUserValue._id != res.data.user) {
             this.invalidRequest();
@@ -111,7 +111,7 @@ export default class EditPostPage extends Component {
       body: this.state.body
     }
 
-    axios.post(backendAddress() + "/posts/update/" + this.state.postid, post)
+    axios.post(`${backendAddress()}/posts/update/` + this.state.postid, post)
     .then(res => {
       console.log(res.data);
       this.props.history.push("/");

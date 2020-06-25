@@ -55,7 +55,7 @@ export default class CreateForum extends Component {
             date: Date.now()
         }
 
-        axios.post(backendAddress() + "/forums/add", forum)
+        axios.post(`${backendAddress()}/forums/add`, forum)
         .then(res => {
           console.log(res.data);
           this.props.history.push("/");
@@ -82,7 +82,7 @@ export default class CreateForum extends Component {
 
     validateName() {
         var isAvailable = false;
-        axios.get(backendAddress() + "/forums/check/" + this.state.name)
+        axios.get(`${backendAddress()}/forums/check/`+ this.state.name)
         .then(res => isAvailable = res.data.isAvailable)
         .catch(error => {
             console.log(error);

@@ -20,11 +20,11 @@ function login(username, password) {
         body: JSON.stringify({ username, password })
     };
 
-    return axios.post(backendAddress()+'/login', JSON.stringify({ username, password }))
+    return axios.post(backendAddress()+'/login', JSON.stringify({username: username, password: password }))
         .then(handleResponse)
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.setItem('currentUser', JSON.stringify({user: user}));
             currentUserSubject.next(user);
 
             return user;

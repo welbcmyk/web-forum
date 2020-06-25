@@ -44,7 +44,7 @@ export default class HomeFeed extends Component {
       const username = "";
       const forumName = "";
       const commentCount = 0;
-      axios.get(backendAddress() + "/users/" + currentPost.user)
+      axios.get(`${backendAddress()}/users/` + currentPost.user)
       .then(response => {
         username = response.data.username
       })
@@ -52,7 +52,7 @@ export default class HomeFeed extends Component {
         console.log(error);
         username = "[deleted]";
       });
-      axios.get(backendAddress() + "/forums/" + currentPost.forum)
+      axios.get(`${backendAddress()}/forums/` + currentPost.forum)
       .then(response => {
         forumName = response.data.name
       })
@@ -60,7 +60,7 @@ export default class HomeFeed extends Component {
         console.log(error);
         forumName = "[deleted]";
       });
-      axios.get(backendAddress() + "/comments/commentCount/" + currentPost._id)
+      axios.get(`${backendAddress()}/comments/commentCount/` + currentPost._id)
       .then(response => {
         commentCount = response.data.count;
       })

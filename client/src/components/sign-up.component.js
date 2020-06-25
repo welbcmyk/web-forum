@@ -78,7 +78,7 @@ export default class SignUp extends Component {
             password: this.state.password,
             date: Date.now(),
         }
-        axios.post(backendAddress() + "/user/add", user)
+        axios.post(`${backendAddress()}/user/add`, user)
         .then(res => {
             console.log(res.data);
             this.props.history.push("/login");
@@ -93,12 +93,13 @@ export default class SignUp extends Component {
 
     validateUsername() {
         var isAvailable = false;
-        axios.get(backendAddress() + "/username/check/" + this.state.username)
+        axios.get(`${backendAddress()}/user/check/` + this.state.username)
         .then(res => isAvailable = res.data.isAvailable)
         .catch(error => {
             console.log(error);
             isAvailable = false;
         })
+        console.log("isAva: " + isAvailable);
         return this.state.username.length > 0 && isAvailable;
     }
 

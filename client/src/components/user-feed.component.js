@@ -60,7 +60,7 @@ export default class HomeFeed extends Component {
     return this.state.posts.map(currentPost => {
       const forumName = "";
       const commentCount = 0;
-      axios.get(backendAddress() + "/forum/" + currentPost.forum)
+      axios.get(`${backendAddress()}/forum/` + currentPost.forum)
       .then(response => {
         forumName = response.data.name
       })
@@ -68,7 +68,7 @@ export default class HomeFeed extends Component {
         console.log(error);
         forumName = "[deleted]";
       });
-      axios.get(backendAddress() + "/comments/commentCount/" + currentPost._id)
+      axios.get(`${backendAddress()}/comments/commentCount/` + currentPost._id)
       .then(response => {
         commentCount = response.data.count;
       })

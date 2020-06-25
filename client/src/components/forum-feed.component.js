@@ -75,7 +75,7 @@ export default class HomeFeed extends Component {
     return this.state.posts.map(currentPost => {
       const username = "";
       const commentCount = 0;
-      axios.get(backendAddress() + "/user/" + currentPost.user)
+      axios.get(`${backendAddress()}/user/` + currentPost.user)
       .then(response => {
         username = response.data.username
       })
@@ -83,7 +83,7 @@ export default class HomeFeed extends Component {
         console.log(error);
         username = "[deleted]";
       });
-      axios.get(backendAddress() + "/comments/commentCount/" + currentPost._id)
+      axios.get(`${backendAddress()}/comments/commentCount/` + currentPost._id)
       .then(response => {
         commentCount = response.data.count;
       })

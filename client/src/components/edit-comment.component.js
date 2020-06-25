@@ -31,7 +31,7 @@ export default class EditCommentPage extends Component {
     }
 
     componentDidMount() {
-        axios.get(backendAddress() + "/comments/" + this.props.match.params.id)
+        axios.get(`${backendAddress()}/comments/` + this.props.match.params.id)
         .then(res => {
             if(authenticationService.currentUserValue._id != res.data.user) {
                 this.invalidRequest();
@@ -72,7 +72,7 @@ export default class EditCommentPage extends Component {
             post: this.state.postid
         }
 
-        axios.post(backendAddress() + "/comments/update/" + this.state.commentid, comment)
+        axios.post(`${backendAddress()}/comments/update/` + this.state.commentid, comment)
         .then(res => {
             console.log(res.data);
             this.props.history.push("/");

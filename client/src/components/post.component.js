@@ -49,7 +49,7 @@ export default class HomeFeed extends Component {
       console.log(error);
     })
 
-    axios.get(backendAddress() + "/user/" + this.state.userid)
+    axios.get(`${backendAddress()}/user/` + this.state.userid)
     .then(response => {
       this.setState({
         username: response.data.username
@@ -62,7 +62,7 @@ export default class HomeFeed extends Component {
       })
     });
 
-    axios.get(backendAddress() + "/forum/" + this.state.forumid)
+    axios.get(`${backendAddress()}/forum/` + this.state.forumid)
     .then(response => {
       this.setState({
         forumname: response.data.name
@@ -88,7 +88,7 @@ export default class HomeFeed extends Component {
   }
 
   deletePost() {
-    axios.delete(backendAddress() + "/post/" + this.state.id)
+    axios.delete(`${backendAddress()}/post/` + this.state.id)
     .then(response => {
         this.props.history.push("/");
     })
@@ -112,7 +112,7 @@ export default class HomeFeed extends Component {
   commentList() {
     return this.state.comments.map(currentComment => {
       const username = "";
-      axios.get(backendAddress() + "/user/" + currentComment.user)
+      axios.get(`${backendAddress()}/user/` + currentComment.user)
       .then(response => {
         username = response.data.username
       })
