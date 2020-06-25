@@ -63,14 +63,14 @@ export default class LogIn extends Component {
         }
         else {
           this.setState({
-            SubmitError: "Email or Password are incorrect.",
+            SubmitError: "Username or Password are incorrect.",
           });
         }
       },
       (error) => {
         console.log(error);
         this.setState({
-          SubmitError: "Email or Password are incorrect.",
+          SubmitError: "Username or Password are incorrect.",
         });
       }
     );
