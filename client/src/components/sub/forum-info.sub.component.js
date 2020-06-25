@@ -7,13 +7,13 @@ function ForumInfo(props) {
       <h1>{props.name}</h1>
       <br />
       <span>{props.description}</span>
-      <span>
+      <div>
         created by{" "}
         <Link class="font-italic " to={"/user/" + props.username}>
           {props.username}
         </Link>
-      </span>
-      <span class="font-italic text-muted">on {props.createdDate}</span>
+      </div>
+      <span class="font-italic text-muted"> on {props.createdDate}</span>
     </div>
   );
 }

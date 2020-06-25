@@ -8,7 +8,7 @@ router.route("/").get((req, res) => {
 });
 
 router.route("/add").post((req, res) => {
-  const user = req.body.username;
+  const user = req.body.user;
   const name = req.body.name;
   const description = req.body.description;
 
@@ -32,7 +32,7 @@ router.route("/:id").get((req, res) => {
 });
 
 router.route("/name/:name").get((req, res) => {
-  Forum.find({ name: req.params.name })
+  Forum.findOne({ name: req.params.name })
     .then((forum) => res.json(forum))
     .catch((err) => res.status(400).json("Error: " + err));
 });

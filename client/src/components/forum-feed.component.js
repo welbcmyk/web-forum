@@ -15,6 +15,9 @@ export default class HomeFeed extends Component {
     this.postList = this.postList.bind(this);
     this.editPost = this.editPost.bind(this);
     this.showPost = this.showPost.bind(this);
+    this.getForum = this.getForum.bind(this);
+    this.getUser = this.getUser.bind(this);
+    this.getPosts = this.getPosts.bind(this);
 
     this.state = {
       posts: [],
@@ -27,14 +30,14 @@ export default class HomeFeed extends Component {
     };
   }
 
-  componentDidMount() {
-    axios
-      .get(backendAddress() + "/forum/" + this.props.match.params.name)
+  getForum() {
+    return axios
+      .get(backendAddress() + "/forum/name/" + this.props.match.params.name)
       .then((response) => {
         this.setState({
           userid: response.data.user,
           id: response.data._id,
-          createdDate: response.data.data,
+          createdDate: response.data.date,
           name: response.data.name,
           description: response.data.description,
         });
@@ -42,28 +45,42 @@ export default class HomeFeed extends Component {
       .catch((error) => {
         console.log(error);
       });
+  }
 
-    axios
-      .get(backendAddress() + "/user/" + this.state.userid)
-      .then((response) => {
-        this.setState({
-          username: response.data.username,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
+  getUser() {
+    return axios
+    .get(backendAddress() + "/user/" + this.state.userid)
+    .then((response) => {
+      this.setState({
+        username: response.data.username,
       });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
 
-    axios
-      .get(backendAddress() + "/posts/forum/" + this.props.match.params.name)
-      .then((response) => {
-        this.setState({
-          posts: response.data,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
+  getPosts(){
+    return  axios
+    .get(backendAddress() + "/posts/forum/" + this.props.match.params.id)
+    .then((response) => {
+      this.setState({
+        posts: response.data,
       });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+
+  componentDidMount() {
+    this.getForum()
+    .finally(() => {
+      return this.getUser()
+    })
+    .finally(() => {
+      return this.getPosts();
+    })
   }
 
   editPost(id) {
