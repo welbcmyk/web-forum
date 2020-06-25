@@ -120,11 +120,12 @@ class NavbarComp extends Component {
       .then((response) => {
         console.log(response.data);
       })
-      .error(() => {
+      .catch(() => {
         console.log("Something went wrong");
       });
-
+    this.handleCloseDeletePopUp();
     authenticationService.logout();
+    this.props.history.push("/login");
   }
 
   render() {

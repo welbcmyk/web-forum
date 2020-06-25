@@ -44,8 +44,8 @@ router.route("/:id").delete((req, res) => {
 });
 
 router.route("/name/:name").delete((req, res) => {
-  User.findOneAndDelete({ name: req.params.name })
-    .then(() => res.json("User deleted."))
+  User.findOneAndDelete({ username: req.params.name })
+    .then(user => res.json("User deleted"))
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
