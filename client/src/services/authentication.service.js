@@ -18,10 +18,15 @@ export const authenticationService = {
 };
 
 function login(username, password) {
+  const user = {
+    username: username,
+    password: password
+  }
+  console.log(user);
   return axios
     .post(
       backendAddress() + "/login",
-      JSON.stringify({ username: username, password: password })
+      user
     )
     .then(handleResponse)
     .then((user) => {
