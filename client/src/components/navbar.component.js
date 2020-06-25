@@ -98,7 +98,7 @@ class NavbarComp extends Component {
   }
 
   validateSearchterm() {
-    return this.state.searchTerm > 0;
+    return this.state.searchTerm.length > 0;
   }
 
   loggedIn() {
