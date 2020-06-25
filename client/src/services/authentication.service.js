@@ -13,7 +13,7 @@ export const authenticationService = {
   logout,
   currentUser: currentUserSubject.asObservable(),
   get currentUserValue() {
-    return (currentUserSubject.value ? JSON.parse(currentUserSubject.value) : false);
+    return currentUserSubject.value;
   },
 };
 

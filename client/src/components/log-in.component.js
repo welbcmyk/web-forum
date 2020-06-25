@@ -18,13 +18,6 @@ export default class LogIn extends Component {
     };
   }
 
-  componentDidMount() {
-    if(authenticationService.currentUserValue)
-    {
-      this.props.history.push("/");
-    }
-  }
-  
   onChangeSubmitError(e) {
     this.setState({
       SubmitError: e.target.value,

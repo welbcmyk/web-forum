@@ -25,13 +25,6 @@ export default class SignUp extends Component {
     };
   }
 
-  componentDidMount() {
-    if(authenticationService.currentUserValue)
-    {
-      this.props.history.push("/");
-    }
-  }
-
   onUsernameChange(e) {
     this.setState({
       username: e.target.value,
