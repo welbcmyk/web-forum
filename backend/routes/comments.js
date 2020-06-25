@@ -58,7 +58,7 @@ router.route("/post/:id").get((req, res) => {
 });
 
 router.route("/commentCount/:postid").get(function (req, res) {
-  detail.count({ post: req.params.postid }, function (err, result) {
+  Comment.count({ post: req.params.postid }, function (err, result) {
     if (err) {
       console.log(err);
     } else {
