@@ -7,6 +7,7 @@ function EditComment(props){
           <br />
           <Form.Group>
             <Form.Control
+            required
             type="text"
               placeholder="Body"
               rows="5"

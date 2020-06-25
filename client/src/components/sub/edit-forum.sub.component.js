@@ -7,6 +7,7 @@ function EditForum(props){
           <br />
           <Form.Group>
             <Form.Control
+            required
               type="text"
               placeholder="Name"
               rows="2"
@@ -17,6 +18,7 @@ function EditForum(props){
           <br />
           <Form.Group>
             <Form.Control
+            required
             type="text"
               placeholder="Description"
               rows="5"

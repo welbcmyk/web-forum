@@ -7,6 +7,7 @@ function LogIn(props) {
             <Form.Group>
                 <Form.Label>Username</Form.Label>
                 <Form.Control
+            required
                 type="name"
                 placeholder="Username"
                 value={props.username}
@@ -17,6 +18,7 @@ function LogIn(props) {
             <Form.Group>
                 <Form.Label>Password</Form.Label>
                 <Form.Control
+            required
                 type="password"
                 placeholder="Password"
                 value={props.password}

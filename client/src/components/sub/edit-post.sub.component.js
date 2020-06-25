@@ -24,6 +24,7 @@ function EditPost(props){
           <br/>
           <Form.Group>
             <Form.Control
+            required
               type="text"
               placeholder="Title"
               rows="2"
@@ -34,6 +35,7 @@ function EditPost(props){
           <br />
           <Form.Group>
             <Form.Control
+            required
             type="text"
               placeholder="Body"
               rows="5"
