@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import axios from 'axios';
-import { Modal, Button} from 'react-bootstrap';
+import axios from "axios";
+import { Modal, Button } from "react-bootstrap";
 
 import PostComp from "./sub/post.sub.component";
 import backendAddress from "../helpers/backend-address";
@@ -29,58 +29,62 @@ export default class HomeFeed extends Component {
       title: "",
       body: "",
       createdDate: "",
-      id: ""
-    }
+      id: "",
+    };
   }
 
   componentDidMount() {
-    axios.get(backendAddress() + '/posts/' + this.props.match.params.id)
-    .then(response => {
-      this.setState({
-        id: response.data._id,
-        title: response.data.title,
-        body: response.data.body,
-        userid: response.data.user,
-        forumid: response.data.forum,
-        createdDate: response.data.date
+    axios
+      .get(backendAddress() + "/posts/" + this.props.match.params.id)
+      .then((response) => {
+        this.setState({
+          id: response.data._id,
+          title: response.data.title,
+          body: response.data.body,
+          userid: response.data.user,
+          forumid: response.data.forum,
+          createdDate: response.data.date,
+        });
       })
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+      .catch((error) => {
+        console.log(error);
+      });
 
-    axios.get(`${backendAddress()}/user/` + this.state.userid)
-    .then(response => {
-      this.setState({
-        username: response.data.username
+    axios
+      .get(`${backendAddress()}/user/` + this.state.userid)
+      .then((response) => {
+        this.setState({
+          username: response.data.username,
+        });
       })
-    })
-    .catch((error) => {
-      console.log(error);
-      this.setState({
-        username: "[deleted]"
-      })
-    });
+      .catch((error) => {
+        console.log(error);
+        this.setState({
+          username: "[deleted]",
+        });
+      });
 
-    axios.get(`${backendAddress()}/forum/` + this.state.forumid)
-    .then(response => {
-      this.setState({
-        forumname: response.data.name
+    axios
+      .get(`${backendAddress()}/forum/` + this.state.forumid)
+      .then((response) => {
+        this.setState({
+          forumname: response.data.name,
+        });
       })
-    })
-    .catch((error) => {
-      console.log(error);
-      this.setState({
-        forumname: "[deleted]"
-      })
-    });
+      .catch((error) => {
+        console.log(error);
+        this.setState({
+          forumname: "[deleted]",
+        });
+      });
 
-    axios.get(backendAddress() + '/comments/post/' + this.props.match.params.id)
-    .then(response => {
-      this.setState({
-        comments: response.data,
-      })
-    })
+    axios
+      .get(backendAddress() + "/comments/post/" + this.props.match.params.id)
+      .then((response) => {
+        this.setState({
+          comments: response.data,
+        });
+      });
   }
 
   editPost() {
@@ -88,72 +92,84 @@ export default class HomeFeed extends Component {
   }
 
   deletePost() {
-    axios.delete(`${backendAddress()}/post/` + this.state.id)
-    .then(response => {
+    axios
+      .delete(`${backendAddress()}/post/` + this.state.id)
+      .then((response) => {
         this.props.history.push("/");
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   handleCloseDeletePopUp() {
     this.setState({
-      showDeletePopUp: false
-    })
+      showDeletePopUp: false,
+    });
   }
 
   handleShowDeletePopUp() {
     this.setState({
-      showDeletePopUp: true
-    })
+      showDeletePopUp: true,
+    });
   }
 
   commentList() {
-    return this.state.comments.map(currentComment => {
+    return this.state.comments.map((currentComment) => {
       const username = "";
-      axios.get(`${backendAddress()}/user/` + currentComment.user)
-      .then(response => {
-        username = response.data.username
-      })
-      .catch((error) => {
-        console.log(error);
-        username = "[deleted]";
-      });
+      axios
+        .get(`${backendAddress()}/user/` + currentComment.user)
+        .then((response) => {
+          username = response.data.username;
+        })
+        .catch((error) => {
+          console.log(error);
+          username = "[deleted]";
+        });
       return (
-        <Comment 
-        key={currentComment._id} 
-        userName={username} 
-        date={currentComment.date} 
-        body={currentComment.body}
+        <Comment
+          key={currentComment._id}
+          userName={username}
+          date={currentComment.date}
+          body={currentComment.body}
         />
-      )
+      );
     });
   }
-  
+
   render() {
     return (
       <>
-      {this.state.title === "" ? <PostNotFound /> : 
-      <>
-        <div class="container">
-        <PostComp 
-        key={this.state._id} 
-        subTitle={this.state.username + " " + this.state.forumname} 
-        date={this.state.date} 
-        title={this.state.title}
-        body={this.state.body}
-        commentCount={this.state.comments.length}
-        ownPost={authenticationService.currentUserValue}
-        onPostEdit={this.editPost}
-        onPostDelete={this.handleShowDeletePopUp}
-        />
-        </div>
-        <div class="container">
-          {this.commentList().length > 0 ? this.commentList() : <EmptyPage />}
-        </div>
-      </>}
-        <Modal show={this.state.showDeletePopUp} onHide={this.handleCloseDeletePopUp}>
+        {this.state.title === "" ? (
+          <PostNotFound />
+        ) : (
+          <>
+            <div class="container">
+              <PostComp
+                key={this.state._id}
+                subTitle={this.state.username + " " + this.state.forumname}
+                date={this.state.date}
+                title={this.state.title}
+                body={this.state.body}
+                commentCount={this.state.comments.length}
+                ownPost={authenticationService.currentUserValue}
+                onPostEdit={this.editPost}
+                onPostDelete={this.handleShowDeletePopUp}
+              />
+            </div>
+            <div class="container">
+              {this.commentList().length > 0 ? (
+                this.commentList()
+              ) : (
+                <EmptyPage />
+              )}
+            </div>
+          </>
+        )}
+        <Modal
+          show={this.state.showDeletePopUp}
+          onHide={this.handleCloseDeletePopUp}
+        >
           <Modal.Header closeButton>
             <Modal.Title>Deleting Post</Modal.Title>
           </Modal.Header>

@@ -8,7 +8,7 @@ import { authenticationService } from "../services";
 export default class EditPostPage extends Component {
   constructor(props) {
     super(props);
-    
+
     this.onSubmit = this.onSubmit.bind(this);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeBody = this.onChangeBody.bind(this);
@@ -27,15 +27,15 @@ export default class EditPostPage extends Component {
       forumid: "",
       dropdownOpen: false,
       submitError: "",
-      postid: ""
+      postid: "",
     };
   }
 
   invalidRequest() {
-      /*this.props.history.push("/");*/
-      this.setState({
-          submitError: "Permission denied"
-      })
+    /*this.props.history.push("/");*/
+    this.setState({
+      submitError: "Permission denied",
+    });
   }
 
   toggle() {
@@ -45,62 +45,64 @@ export default class EditPostPage extends Component {
   }
 
   componentDidMount() {
-    axios.get(backendAddress() + '/forums')
-    .then(response => {
-      this.setState({
-        forums: response.data,
+    axios
+      .get(backendAddress() + "/forums")
+      .then((response) => {
+        this.setState({
+          forums: response.data,
+        });
       })
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      .catch((error) => {
+        console.log(error);
+      });
 
-    axios.get(`${backendAddress()}/posts/` + this.props.match.params.id)
-    .then(res => {
-        if(authenticationService.currentUserValue._id != res.data.user) {
-            this.invalidRequest();
+    axios
+      .get(`${backendAddress()}/posts/` + this.props.match.params.id)
+      .then((res) => {
+        if (authenticationService.currentUserValue._id != res.data.user) {
+          this.invalidRequest();
         }
         this.setState({
-            userid: res.data.user,
-            title:res.data.title,
-            body: res.data.body,
-            postid: res.data._id,
-            forumid: res.data.forum,
-        })
-    })
-    .catch(error => {
+          userid: res.data.user,
+          title: res.data.title,
+          body: res.data.body,
+          postid: res.data._id,
+          forumid: res.data.forum,
+        });
+      })
+      .catch((error) => {
         console.log(error);
         this.invalidRequest();
-    })
+      });
   }
   onSubmit(e) {
     e.preventDefault();
 
     this.setState({
-        submitError: ""
+      submitError: "",
     });
-    if(authenticationService.currentUserValue._id != this.state.userid) {
-        this.invalidRequest();
-        return;
+    if (authenticationService.currentUserValue._id != this.state.userid) {
+      this.invalidRequest();
+      return;
     }
 
-    if(!this.validateForum()){
+    if (!this.validateForum()) {
       this.setState({
-        submitError: "No valid forum selected."
+        submitError: "No valid forum selected.",
       });
       return;
     }
 
-    if(!this.validateTitle()){
+    if (!this.validateTitle()) {
       this.setState({
-        submitError: "Please enter a title."
+        submitError: "Please enter a title.",
       });
       return;
     }
 
-    if(!this.validateBody()){
+    if (!this.validateBody()) {
       this.setState({
-        submitError: "Please enter content."
+        submitError: "Please enter content.",
       });
       return;
     }
@@ -108,20 +110,21 @@ export default class EditPostPage extends Component {
       user: this.state.userid,
       forum: this.state.forumid,
       title: this.state.title,
-      body: this.state.body
-    }
+      body: this.state.body,
+    };
 
-    axios.post(`${backendAddress()}/posts/update/` + this.state.postid, post)
-    .then(res => {
-      console.log(res.data);
-      this.props.history.push("/");
-    })
-    .catch(error => {
-      console.log("Error: " + error);
-      this.setState({
-          SubmitError: "Something went wrong."
+    axios
+      .post(`${backendAddress()}/posts/update/` + this.state.postid, post)
+      .then((res) => {
+        console.log(res.data);
+        this.props.history.push("/");
+      })
+      .catch((error) => {
+        console.log("Error: " + error);
+        this.setState({
+          SubmitError: "Something went wrong.",
+        });
       });
-    });
   }
 
   onChangeTitle(e) {
@@ -149,7 +152,7 @@ export default class EditPostPage extends Component {
   validateBody() {
     return this.state.body > 0;
   }
-  
+
   validateForum() {
     return this.state.forumid != "";
   }
@@ -157,16 +160,16 @@ export default class EditPostPage extends Component {
   render() {
     return (
       <EditPost
-      currentForum={this.state.forumid}
-      handleForumChange={this.onChangeForum}
-      forums={this.state.forms}
-      handleHeaderChange={this.onChangeTitle}
-      header={this.state.title}
-      handleBodyChange={this.onChangeBody}
-      body={this.state.body}
-      submitBtn="Create Post"
-      SubmitError={this.state.submitError}
-      handleSubmit={this.onSubmit}
+        currentForum={this.state.forumid}
+        handleForumChange={this.onChangeForum}
+        forums={this.state.forms}
+        handleHeaderChange={this.onChangeTitle}
+        header={this.state.title}
+        handleBodyChange={this.onChangeBody}
+        body={this.state.body}
+        submitBtn="Create Post"
+        SubmitError={this.state.submitError}
+        handleSubmit={this.onSubmit}
       />
     );
   }

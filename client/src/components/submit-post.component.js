@@ -8,7 +8,7 @@ import { authenticationService } from "../services";
 export default class SubmitPost extends Component {
   constructor(props) {
     super(props);
-    
+
     this.onSubmit = this.onSubmit.bind(this);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeBody = this.onChangeBody.bind(this);
@@ -25,7 +25,7 @@ export default class SubmitPost extends Component {
       userid: "",
       forumid: "",
       dropdownOpen: false,
-      submitError: ""
+      submitError: "",
     };
   }
 
@@ -36,59 +36,59 @@ export default class SubmitPost extends Component {
   }
 
   componentDidMount() {
-    return (
-      axios.get(backendAddress() + '/forums')
-      .then(response => {
+    return axios
+      .get(backendAddress() + "/forums")
+      .then((response) => {
         this.setState({
           forums: response.data,
-        })
+        });
       })
       .catch((error) => {
         console.log(error);
-      })
-    );
+      });
   }
   onSubmit(e) {
     e.preventDefault();
     this.setState({
-        submitError: ""
+      submitError: "",
     });
-    if(!this.validateForum()){
+    if (!this.validateForum()) {
       this.setState({
-        submitError: "No valid forum selected."
-      })
+        submitError: "No valid forum selected.",
+      });
     }
 
-    if(!this.validateTitle()){
+    if (!this.validateTitle()) {
       this.setState({
-        submitError: "Please enter a title."
-      })
+        submitError: "Please enter a title.",
+      });
     }
 
-    if(!this.validateBody()){
+    if (!this.validateBody()) {
       this.setState({
-        submitError: "Please enter content."
-      })
+        submitError: "Please enter content.",
+      });
     }
     const post = {
       user: this.state.userid,
       forum: this.state.forumid,
       title: this.state.title,
       body: this.state.body,
-      date: Date.now()
-    }
+      date: Date.now(),
+    };
 
-    axios.post(`${backendAddress()}/posts/add`, post)
-    .then(res => {
-      console.log(res.data);
-      this.props.history.push("/");
-    })
-    .catch(error => {
-      console.log("Error: " + error);
-      this.setState({
-          SubmitError: "Something went wrong."
+    axios
+      .post(`${backendAddress()}/posts/add`, post)
+      .then((res) => {
+        console.log(res.data);
+        this.props.history.push("/");
+      })
+      .catch((error) => {
+        console.log("Error: " + error);
+        this.setState({
+          SubmitError: "Something went wrong.",
+        });
       });
-    });
   }
 
   onChangeTitle(e) {
@@ -116,7 +116,7 @@ export default class SubmitPost extends Component {
   validateBody() {
     return this.state.body > 0;
   }
-  
+
   validateForum() {
     return this.state.forumid != "";
   }
@@ -124,16 +124,16 @@ export default class SubmitPost extends Component {
   render() {
     return (
       <EditPost
-      currentForum={this.state.forumid}
-      handleForumChange={this.onChangeForum}
-      forums={this.state.forms}
-      handleHeaderChange={this.onChangeTitle}
-      header={this.state.title}
-      handleBodyChange={this.onChangeBody}
-      body={this.state.body}
-      submitBtn="Create Post"
-      SubmitError={this.state.submitError}
-      handleSubmit={this.onSubmit}
+        currentForum={this.state.forumid}
+        handleForumChange={this.onChangeForum}
+        forums={this.state.forms}
+        handleHeaderChange={this.onChangeTitle}
+        header={this.state.title}
+        handleBodyChange={this.onChangeBody}
+        body={this.state.body}
+        submitBtn="Create Post"
+        SubmitError={this.state.submitError}
+        handleSubmit={this.onSubmit}
       />
     );
   }

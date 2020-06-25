@@ -1,11 +1,11 @@
-import { authHeader } from '../helpers/auth-header';
-import { handleResponse } from '../helpers/handle-response';
+import { authHeader } from "../helpers/auth-header";
+import { handleResponse } from "../helpers/handle-response";
 
 export const userService = {
-    getAll
+  getAll,
 };
 
 function getAll() {
-    const requestOptions = { method: 'GET', headers: authHeader() };
-    return fetch(`/users`, requestOptions).then(handleResponse);
+  const requestOptions = { method: "GET", headers: authHeader() };
+  return fetch(`/users`, requestOptions).then(handleResponse);
 }

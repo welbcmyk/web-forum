@@ -1,5 +1,5 @@
-import react from 'react';
+import react from "react";
 
 export default () => {
-    return "http://localhost:5000";
-}
+  return "http://localhost:5000";
+};

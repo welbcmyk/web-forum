@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from 'axios';
+import axios from "axios";
 
 import PostComp from "./sub/post.sub.component";
 import backendAddress from "../helpers/backend-address";
@@ -20,32 +20,34 @@ export default class HomeFeed extends Component {
       posts: [],
       username: "",
       id: "",
-      joinDate: ""
-    }
+      joinDate: "",
+    };
   }
 
   componentDidMount() {
-    axios.get(backendAddress() + '/user/' + this.props.match.params.name)
-    .then(response => {
-      this.setState({
-        username: response.data.username,
-        id: response.data._id,
-        joinDate: response.data.data
+    axios
+      .get(backendAddress() + "/user/" + this.props.match.params.name)
+      .then((response) => {
+        this.setState({
+          username: response.data.username,
+          id: response.data._id,
+          joinDate: response.data.data,
+        });
       })
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+      .catch((error) => {
+        console.log(error);
+      });
 
-    axios.get(backendAddress() + '/posts/user/' + this.props.match.params.name)
-    .then(response => {
-      this.setState({
-        posts: response.data,
+    axios
+      .get(backendAddress() + "/posts/user/" + this.props.match.params.name)
+      .then((response) => {
+        this.setState({
+          posts: response.data,
+        });
       })
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   editPost(id) {
@@ -57,54 +59,62 @@ export default class HomeFeed extends Component {
   }
 
   postList() {
-    return this.state.posts.map(currentPost => {
+    return this.state.posts.map((currentPost) => {
       const forumName = "";
       const commentCount = 0;
-      axios.get(`${backendAddress()}/forum/` + currentPost.forum)
-      .then(response => {
-        forumName = response.data.name
-      })
-      .catch((error) => {
-        console.log(error);
-        forumName = "[deleted]";
-      });
-      axios.get(`${backendAddress()}/comments/commentCount/` + currentPost._id)
-      .then(response => {
-        commentCount = response.data.count;
-      })
-      .catch((error) => {
-        console.log(error);
-        commentCount = 0;
-      });
+      axios
+        .get(`${backendAddress()}/forum/` + currentPost.forum)
+        .then((response) => {
+          forumName = response.data.name;
+        })
+        .catch((error) => {
+          console.log(error);
+          forumName = "[deleted]";
+        });
+      axios
+        .get(`${backendAddress()}/comments/commentCount/` + currentPost._id)
+        .then((response) => {
+          commentCount = response.data.count;
+        })
+        .catch((error) => {
+          console.log(error);
+          commentCount = 0;
+        });
       return (
-        <PostComp 
-        key={currentPost._id} 
-        subTitle={this.state.username + " " + forumName}
-        date={currentPost.date} 
-        title={currentPost.title}
-        body={currentPost.body}
-        commentCount={commentCount}
-        showEdit={authenticationService.currentUserValue}
-        showDelete={false}
-        onPostEdit={this.editPost(currentPost._id)}
-        onClickPost={this.showPost(currentPost._id)}
+        <PostComp
+          key={currentPost._id}
+          subTitle={this.state.username + " " + forumName}
+          date={currentPost.date}
+          title={currentPost.title}
+          body={currentPost.body}
+          commentCount={commentCount}
+          showEdit={authenticationService.currentUserValue}
+          showDelete={false}
+          onPostEdit={this.editPost(currentPost._id)}
+          onClickPost={this.showPost(currentPost._id)}
         />
-      )
+      );
     });
   }
-  
+
   render() {
     return (
       <>
-        {this.state.username === "" ? <UserNotFound /> : 
-        <>
-          <div class="container">
-            <UserInfo name={this.state.username} joinedDate={this.state.joinDate} />
-          </div>
-          <div class="container">
-            {this.postList().length > 0 ? this.postList() : <EmptyPage />}
-          </div>
-        </>}
+        {this.state.username === "" ? (
+          <UserNotFound />
+        ) : (
+          <>
+            <div class="container">
+              <UserInfo
+                name={this.state.username}
+                joinedDate={this.state.joinDate}
+              />
+            </div>
+            <div class="container">
+              {this.postList().length > 0 ? this.postList() : <EmptyPage />}
+            </div>
+          </>
+        )}
       </>
     );
   }

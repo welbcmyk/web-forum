@@ -1,7 +1,5 @@
-import React from 'react';
+import React from "react";
 
 export default function Empty() {
-    return (
-        <h2> Such empty. </h2>
-    );
+  return <h2> Such empty. </h2>;
 }
