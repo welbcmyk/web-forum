@@ -81,7 +81,7 @@ export default class CreateForum extends Component {
     }
 
     validateName() {
-        const isAvailable = false;
+        var isAvailable = false;
         axios.get(backendAddress() + "/forums/check/" + this.state.name)
         .then(res => isAvailable = res.data.isAvailable)
         .catch(error => {

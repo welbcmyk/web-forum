@@ -107,7 +107,7 @@ export default class EditForumPage extends Component {
     }
 
     validateName() {
-        const isAvailable = false;
+        var isAvailable = false;
         if(this.state.name != this.state.oldname)
         {
             axios.get(backendAddress() + "/forums/check/" + this.state.name)
