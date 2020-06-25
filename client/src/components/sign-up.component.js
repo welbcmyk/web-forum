@@ -97,7 +97,7 @@ export default class SignUp extends Component {
   }
 
   async validateUsername() {
-    axios
+    return axios
       .get(`${backendAddress()}/user/check/` + this.state.username)
       .then((res) => {
         this.setState({

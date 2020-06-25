@@ -20,6 +20,7 @@ export default class CreateForum extends Component {
       description: "",
       submitError: "",
       validForumName: false,
+      forumNameIsAvailable: false,
     };
   }
 
@@ -60,7 +61,7 @@ export default class CreateForum extends Component {
         .post(`${backendAddress()}/forums/add`, forum)
         .then((res) => {
           console.log(res.data);
-          this.props.history.push("/");
+          this.props.history.push("/forum/" + forum.name);
         })
         .catch((error) => {
           console.log("Error: " + error);
@@ -84,18 +85,24 @@ export default class CreateForum extends Component {
   }
 
   async validateName() {
-    var isAvailable = false;
-    axios
+    return axios
       .get(`${backendAddress()}/forums/check/` + this.state.name)
-      .then((res) => (isAvailable = res.data.isAvailable))
+      .then((res) => {
+        this.setState({
+          forumNameIsAvailable: res.data.isAvailable,
+        })
+      })
       .catch((error) => {
         console.log(error);
-        isAvailable = false;
+        this.setState({
+          forumNameIsAvailable: false,
+        })
       })
       .finally(() => {
         this.setState({
-          validForumName: this.state.name > 0 && isAvailable,
+          validForumName: this.state.name.length > 0 && this.state.forumNameIsAvailable,
         });
+        console.log("befor: " + this.state.validForumName);
       });
   }
 
