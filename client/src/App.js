@@ -18,6 +18,7 @@ import EditForum from "./components/edit-forum.component";
 import EditComment from "./components/edit-comment.component";
 import EditPost from "./components/edit-post.component";
 import Search from "./components/search.component";
+import ChangePassword from "./components/change-password.component";
 class App extends Component {
   render() {
     // todo search
@@ -47,6 +48,7 @@ class App extends Component {
           <Route path="/signup" exact component={SignUp} />
           <Route path="/login" exact component={LogIn} />
           <Route path="/search/:searchterm" exact component={Search} />
+          <Route path="/change/password" exact component={ChangePassword} />
         </div>
       </Router>
     );

@@ -26,7 +26,6 @@ function Profil(props) {
 function Settings(props) {
   return (
     <NavDropdown title="Settings" id="settings-dropdown">
-      <NavDropdown.Item href="/change/email">Change Email</NavDropdown.Item>
       <NavDropdown.Item href="/change/password">
         Change Password
       </NavDropdown.Item>

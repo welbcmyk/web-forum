@@ -8,8 +8,8 @@ export function handleResponse(response) {
       window.location.reload(true);
       console.log("status error");
     }
-    const error = (response.config.data && response.data) || response.statusText;
+    const error = (response.data) || response.statusText;
     return Promise.reject(error);
   }
-  return response.config.data;
+  return response.data;
 }

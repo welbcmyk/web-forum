@@ -22,19 +22,18 @@ function login(username, password) {
     username: username,
     password: password
   }
-  console.log(user);
   return axios
     .post(
       backendAddress() + "/login",
       user
     )
     .then(handleResponse)
-    .then((user) => {
+    .then((userDB) => {
       // store user details and jwt token in local storage to keep user logged in between page refreshes
-      localStorage.setItem("currentUser", JSON.stringify({ username: username, password: password }));
-      currentUserSubject.next(user);
+      localStorage.setItem("currentUser", JSON.stringify(userDB));
+      currentUserSubject.next(userDB);
 
-      return user;
+      return userDB;
     });
 }
 
