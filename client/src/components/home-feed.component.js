@@ -42,9 +42,9 @@ export default class HomeFeed extends Component {
 
   postList() {
     return this.state.posts.map((currentPost) => {
-      const username = "";
-      const forumName = "";
-      const commentCount = 0;
+      let username = "";
+      let forumName = "";
+      let commentCount = 0;
       axios
         .get(`${backendAddress()}/users/` + currentPost.user)
         .then((response) => {
