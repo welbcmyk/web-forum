@@ -16,7 +16,7 @@ function SignUp() {
 }
 
 function CreatePost() {
-  return <Nav.Link href="/submit">Create Post</Nav.Link>;
+  return <Nav.Link href="/create/post">Create Post</Nav.Link>;
 }
 
 function CreateForum() {
