@@ -55,12 +55,20 @@ export default class LogIn extends Component {
     }
     authenticationService.login(this.state.username, this.state.password).then(
       (user) => {
-        const { from } = this.props.location.state || {
-          from: { pathname: "/" },
-        };
-        this.props.history.push(from);
+        if( authenticationService.currentUser ) {
+          const { from } = this.props.location.state || {
+            from: { pathname: "/" },
+          };
+          this.props.history.push(from);
+        }
+        else {
+          this.setState({
+            SubmitError: "Email or Password are incorrect.",
+          });
+        }
       },
       (error) => {
+        console.log(error);
         this.setState({
           SubmitError: "Email or Password are incorrect.",
         });
