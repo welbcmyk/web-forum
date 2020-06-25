@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 
-const forums = (forums) => {
+const forumList = (forums) => {
   return forums.map((forum) => {
     return <option value={forum._id}>{forum.name}</option>;
   });
@@ -18,7 +18,7 @@ function EditPost(props) {
           value={props.currentForum}
           onChange={props.handleForumChange}
         >
-          {forums(props.forums)}
+          {forumList(props.forums)}
         </Form.Control>
       </Form.Group>
       <br />
@@ -47,7 +47,10 @@ function EditPost(props) {
       <Button variant="primary" type="submit">
         {props.submitBtn}
       </Button>
-      <Form.Label class="text-danger">{props.SubmitError}</Form.Label>
+      <br />
+      <div>
+        <Form.Label class="text-danger">{props.SubmitError}</Form.Label>
+      </div>
     </Form>
   );
 }

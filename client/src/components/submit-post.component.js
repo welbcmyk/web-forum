@@ -36,11 +36,15 @@ export default class SubmitPost extends Component {
   }
 
   componentDidMount() {
+    this.setState({
+      userid: authenticationService.currentUserValue._id,
+    });
     return axios
       .get(backendAddress() + "/forums")
       .then((response) => {
         this.setState({
           forums: response.data,
+          forumid: response.data[0]._id,
         });
       })
       .catch((error) => {
@@ -86,7 +90,7 @@ export default class SubmitPost extends Component {
       .catch((error) => {
         console.log("Error: " + error);
         this.setState({
-          SubmitError: "Something went wrong.",
+          submitError: "Something went wrong.",
         });
       });
   }
@@ -110,11 +114,11 @@ export default class SubmitPost extends Component {
   }
 
   validateTitle() {
-    return this.state.title > 0;
+    return this.state.title.length > 0;
   }
 
   validateBody() {
-    return this.state.body > 0;
+    return this.state.body.length > 0;
   }
 
   validateForum() {
@@ -126,7 +130,7 @@ export default class SubmitPost extends Component {
       <EditPost
         currentForum={this.state.forumid}
         handleForumChange={this.onChangeForum}
-        forums={this.state.forms}
+        forums={this.state.forums}
         handleHeaderChange={this.onChangeTitle}
         header={this.state.title}
         handleBodyChange={this.onChangeBody}
