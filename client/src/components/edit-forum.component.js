@@ -21,7 +21,8 @@ export default class EditForumPage extends Component {
             name: "",
             description: "",
             submitError: "",
-            oldname: ""
+            oldname: "",
+            validForumName: false
         }
     }
 
@@ -52,7 +53,7 @@ export default class EditForumPage extends Component {
         })
     }
 
-    onSubmit(e) {
+    async onSubmit(e) {
         e.preventDefault();
         this.setState({
             submitError: ""
@@ -61,36 +62,39 @@ export default class EditForumPage extends Component {
             this.invalidRequest();
         }
 
-        if(!this.validateName){
-            this.setState({
-                submitError: this.state.name + " is not available."
+        this.validateName()
+        .finally(() => {
+            if(!this.state.validForumName){
+                this.setState({
+                    submitError: this.state.name + " is not available."
+                });
+                return;
+            }
+
+            if(!this.validateDescription){
+                this.setState({
+                    submitError: "Please enter Description."
+                });
+                return;
+            }
+
+            const forum = {
+                user: this.state.userid,
+                name: this.state.name,
+                description: this.state.description
+            }
+
+            axios.post(`${backendAddress()}/forums/update/` + this.state.forumid, forum)
+            .then(res => {
+            console.log(res.data);
+            this.props.history.push("/");
+            })
+            .catch(error => {
+                console.log("Error: " + error);
+                this.setState({
+                    SubmitError: "Something went wrong."
+                });
             });
-            return;
-        }
-
-        if(!this.validateDescription){
-            this.setState({
-                submitError: "Please enter Description."
-            });
-            return;
-        }
-
-        const forum = {
-            user: this.state.userid,
-            name: this.state.name,
-            description: this.state.description
-        }
-
-        axios.post(`${backendAddress()}/forums/update/` + this.state.forumid, forum)
-        .then(res => {
-          console.log(res.data);
-          this.props.history.push("/");
-        })
-        .catch(error => {
-          console.log("Error: " + error);
-          this.setState({
-              SubmitError: "Something went wrong."
-          });
         });
     }
 
@@ -106,21 +110,19 @@ export default class EditForumPage extends Component {
         })
     }
 
-    validateName() {
+    async validateName() {
         var isAvailable = false;
-        if(this.state.name != this.state.oldname)
-        {
-            axios.get(`${backendAddress()}/forums/check/` + this.state.name)
-            .then(res => isAvailable = res.data.isAvailable)
-            .catch(error => {
-                console.log(error);
-                isAvailable = false;
+        axios.get(`${backendAddress()}/forums/check/`+ this.state.name)
+        .then(res => isAvailable = res.data.isAvailable)
+        .catch(error => {
+            console.log(error);
+            isAvailable = false;
+        })
+        .finally(() => {
+            this.setState({
+                validForumName: this.state.name > 0 && isAvailable
             })
-        } 
-        else {
-            isAvailable = true;
-        }
-        return this.state.name > 0 && isAvailable;
+        })
     }
 
     validateDescription() {

@@ -77,9 +77,9 @@ router.route('/').get((req, res) => {
   });
 
   router.route('/check/:name').get((req, res) => {
-    User.find({name: req.params.name})
+    User.findOne({name: req.params.name})
     .then(user => {
-      res.json({isAvailable: false});
+      res.json({isAvailable: user == null});
     })
     .catch(err => {
       res.json({isAvailable: true});

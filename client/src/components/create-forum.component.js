@@ -18,7 +18,8 @@ export default class CreateForum extends Component {
             userid: "",
             name: "",
             description: "",
-            submitError: ""
+            submitError: "",
+            validForumName: false
         }
     }
 
@@ -28,43 +29,45 @@ export default class CreateForum extends Component {
         })
     }
 
-    onSubmit(e) {
+    async onSubmit(e) {
         e.preventDefault();
         this.setState({
             submitError: ""
         });
-
-        if(!this.validateName){
-            this.setState({
-                submitError: this.state.name + " is not available."
+        this.validateName()
+        .finally(() => {
+            if(!this.state.validForumName){
+                this.setState({
+                    submitError: this.state.name + " is not available."
+                });
+                return;
+            }
+    
+            if(!this.validateDescription){
+                this.setState({
+                    submitError: "Please enter Description."
+                });
+                return;
+            }
+    
+            const forum = {
+                user: this.state.userid,
+                name: this.state.name,
+                description: this.state.description,
+                date: Date.now()
+            }
+    
+            axios.post(`${backendAddress()}/forums/add`, forum)
+            .then(res => {
+              console.log(res.data);
+              this.props.history.push("/");
+            })
+            .catch(error => {
+              console.log("Error: " + error);
+              this.setState({
+                  SubmitError: "Something went wrong."
+              });
             });
-            return;
-        }
-
-        if(!this.validateDescription){
-            this.setState({
-                submitError: "Please enter Description."
-            });
-            return;
-        }
-
-        const forum = {
-            user: this.state.userid,
-            name: this.state.name,
-            description: this.state.description,
-            date: Date.now()
-        }
-
-        axios.post(`${backendAddress()}/forums/add`, forum)
-        .then(res => {
-          console.log(res.data);
-          this.props.history.push("/");
-        })
-        .catch(error => {
-          console.log("Error: " + error);
-          this.setState({
-              SubmitError: "Something went wrong."
-          });
         });
     }
 
@@ -80,7 +83,7 @@ export default class CreateForum extends Component {
         })
     }
 
-    validateName() {
+    async validateName() {
         var isAvailable = false;
         axios.get(`${backendAddress()}/forums/check/`+ this.state.name)
         .then(res => isAvailable = res.data.isAvailable)
@@ -88,7 +91,11 @@ export default class CreateForum extends Component {
             console.log(error);
             isAvailable = false;
         })
-        return this.state.name > 0 && isAvailable;
+        .finally(() => {
+            this.setState({
+                validForumName: this.state.name > 0 && isAvailable
+            })
+        })
     }
 
     validateDescription() {

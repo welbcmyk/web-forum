@@ -77,9 +77,9 @@ router.route('/:id').delete((req, res) => {
   });
 
   router.route('/check/:name').get((req, res) => {
-    Forum.find({name: req.params.name})
+    Forum.findOne({name: req.params.name})
     .then(forum => {
-      res.json({isAvailable: false});
+      res.json({isAvailable: forum == null});
     })
     .catch(err => {
       res.json({isAvailable: true});

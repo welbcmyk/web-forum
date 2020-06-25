@@ -19,7 +19,9 @@ export default class SignUp extends Component {
             username: '',
             email: '',
             password: '',
-            SubmitError: ''
+            SubmitError: '',
+            usernameIsAvailable: false,
+            validUsername: false
         }
     }
 
@@ -47,60 +49,71 @@ export default class SignUp extends Component {
         });
     }
 
-    onSubmit(e) {
+    async onSubmit(e) {
         e.preventDefault();
 
         this.setState({
             SubmitError: ""
         });
-        
-        if(!this.validateUsername()){
-            this.setState({
-                SubmitError: this.state.username + " is not available."
-            });
-            return;
-        }
-        if(!this.validateEmail()){
-            this.setState({
-                SubmitError: "Please enter an E-Mail."
-            });
-            return;
-        }
-        if(!this.validatePassword()){
-            this.setState({
-                SubmitError: "Please enter a Password."
-            });
-            return;
-        }
-        const user = {
-            username: this.state.username,
-            email: this.state.email,
-            password: this.state.password,
-            date: Date.now(),
-        }
-        axios.post(`${backendAddress()}/user/add`, user)
-        .then(res => {
-            console.log(res.data);
-            this.props.history.push("/login");
-        })
-        .catch(error => {
-            console.log(error);
-            this.setState({
-                SubmitError: "Something went wrong."
+
+        this.validateUsername()
+        .finally(() => {
+            if(!this.state.validUsername){
+                this.setState({
+                    SubmitError: this.state.username + " is not available."
+                });
+                return;
+            }
+            if(!this.validateEmail()){
+                this.setState({
+                    SubmitError: "Please enter an E-Mail."
+                });
+                return;
+            }
+            if(!this.validatePassword()){
+                this.setState({
+                    SubmitError: "Please enter a Password."
+                });
+                return;
+            }
+            const user = {
+                username: this.state.username,
+                email: this.state.email,
+                password: this.state.password,
+                date: Date.now(),
+            }
+            axios.post(`${backendAddress()}/user/add`, user)
+            .then(res => {
+                console.log(res.data);
+                this.props.history.push("/login");
             })
-        })
+            .catch(error => {
+                console.log(error);
+                this.setState({
+                    SubmitError: "Something went wrong."
+                })
+            })
+        });
     }
 
-    validateUsername() {
-        var isAvailable = false;
+    async validateUsername() {
         axios.get(`${backendAddress()}/user/check/` + this.state.username)
-        .then(res => isAvailable = res.data.isAvailable)
+        .then(res => {
+            this.setState({
+                usernameIsAvailable: res.data.isAvailable
+            })
+        })
         .catch(error => {
             console.log(error);
-            isAvailable = false;
+            this.setState({
+                usernameIsAvailable: false
+            })
         })
-        console.log("isAva: " + isAvailable);
-        return this.state.username.length > 0 && isAvailable;
+        .finally(() => {
+            this.setState({
+                validUsername: this.state.username.length > 0 && this.state.usernameIsAvailable
+            }) 
+        })
     }
 
     validatePassword() {
