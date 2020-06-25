@@ -32,7 +32,7 @@ router.route("/:id").get((req, res) => {
 });
 
 router.route("/name/:name").get((req, res) => {
-  Forum.findById({ name: req.params.name })
+  Forum.find({ name: req.params.name })
     .then((forum) => res.json(forum))
     .catch((err) => res.status(400).json("Error: " + err));
 });
@@ -44,7 +44,7 @@ router.route("/:id").delete((req, res) => {
 });
 
 router.route("/name/:name").delete((req, res) => {
-  Forum.findByIdAndDelete({ name: req.params.name })
+  Forum.findAndDelete({ name: req.params.name })
     .then(() => res.json("Forum deleted."))
     .catch((err) => res.status(400).json("Error: " + err));
 });
