@@ -30,7 +30,9 @@ function EditForum(props) {
       <Button variant="primary" type="submit">
         {props.submitBtn}
       </Button>
-      <Form.Label class="text-danger">{props.SubmitError}</Form.Label>
+      <div>
+        <Form.Label class="text-danger">{props.SubmitError}</Form.Label>
+      </div>
     </Form>
   );
 }
