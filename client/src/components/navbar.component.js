@@ -19,6 +19,10 @@ function CreatePost() {
   return <Nav.Link href="/submit">Create Post</Nav.Link>;
 }
 
+function CreateForum() {
+  return <Nav.Link href="/create/forum">Create Forum</Nav.Link>;
+}
+
 function Profil(props) {
   return <Nav.Link href={"/user/" + props.username}>Profil</Nav.Link>;
 }
@@ -144,6 +148,7 @@ class NavbarComp extends Component {
           </Navbar.Brand>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
+              {this.loggedIn() ? <CreateForum /> : ""}
               {this.loggedIn() ? <CreatePost /> : ""}
               {this.loggedIn() ? (
                 <Profil
