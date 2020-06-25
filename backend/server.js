@@ -29,7 +29,7 @@ const loginRoute = require("./routes/login");
 app.use("/users", usersRoute);
 app.use("/posts", postsRoute);
 app.use("/comments", commentsRoute);
-app.use("/forum", forumsRoute);
+app.use("/forums", forumsRoute);
 app.use("/user", usersRoute);
 app.use("/post", postsRoute);
 app.use("/comment", commentsRoute);
