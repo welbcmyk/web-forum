@@ -67,4 +67,13 @@ router.route("/forum/:id").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
+router.route("/search/:searchterm").get((req, res) => {
+  Post.find({ $or: [
+    { title: new RegExp(".*" + req.params.searchterm + ".*", "i") },
+    { body: new RegExp(".*" + req.params.searchterm + ".*", "i") }
+  ] })
+  .then(posts => res.json(posts))
+  .catch((err) => res.status(400).json("Error: " + err));
+})
+
 module.exports = router;

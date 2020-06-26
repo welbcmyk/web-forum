@@ -89,4 +89,13 @@ router.route("/check/:name").get((req, res) => {
     });
 });
 
+router.route("/search/:searchterm").get((req, res) => {
+  Forum.find({ $or: [
+    { name: new RegExp(".*" + req.params.searchterm + ".*", "i") },
+    { description: new RegExp(".*" + req.params.searchterm + ".*", "i") }
+  ] })
+  .then(forums => res.json(forums))
+  .catch((err) => res.status(400).json("Error: " + err));
+})
+
 module.exports = router;
