@@ -8,8 +8,11 @@ function Post(props) {
       <Card.Body>
         <div onClick={props.onClickPost}>
           <span class="text-muted small">
-            {props.subTitle} {props.date}
+            {props.subTitle}
           </span>
+          <div class="text-muted small">
+            {props.date}
+          </div>
           <h1>{props.title}</h1>
           <div style={{height: "auto", width: "50rem"}}>{props.body}</div>
           <div class="d-flex justify-content-between">

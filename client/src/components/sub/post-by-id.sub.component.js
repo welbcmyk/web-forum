@@ -1,15 +1,17 @@
 import React, {Component} from "react";
 import axios from "axios";
 import {Modal, Button} from "react-bootstrap";
+import { withRouter } from "react-router-dom";
 
 import Post from "./post.sub.component";
 import backendAddress from "../../helpers/backend-address";
 import {authenticationService} from "../../services/authentication.service";
 
-export default class PostId extends Component {
+class PostId extends Component {
     constructor(props) {
         super(props);
         this.editPost = this.editPost.bind(this);
+        this.showPost = this.showPost.bind(this);
         this.deletePost = this.deletePost.bind(this);
         this.handleCloseDeletePopUp = this.handleCloseDeletePopUp.bind(this);
         this.handleShowDeletePopUp = this.handleShowDeletePopUp.bind(this);
@@ -85,8 +87,12 @@ export default class PostId extends Component {
         })
     }
 
-    editPost() {
-      this.props.history.push("/edit/post/" + this.state.id);
+    editPost(id) {
+      this.props.history.push("/post/edit/" + id);
+    }
+  
+    showPost(id) {
+      this.props.history.push("/post/" + id);
     }
   
     deletePost() {
@@ -116,7 +122,7 @@ export default class PostId extends Component {
         return (
             <>
                 <Post
-                key={this.state.id}
+                id={this.state.id}
                 subTitle={this.state.username + " " + this.state.forumName}
                 date={this.state.date}
                 title={this.state.title}
@@ -148,3 +154,5 @@ export default class PostId extends Component {
         );
     }
 }
+
+export default withRouter(PostId);

@@ -14,7 +14,7 @@ function Comment(props) {
           <div style={{height:"auto", width:"50rem"}}>{props.body}</div>
           <div>
             {props.ownComment ? (
-              <Link to={"/comment/edit/" + props.key} class="fa fa-pencil"></Link>
+              <Link to={"/comment/edit/" + props.id} class="fa fa-pencil"></Link>
             ) : (
               ""
             )}

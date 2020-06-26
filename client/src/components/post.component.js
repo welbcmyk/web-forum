@@ -5,7 +5,7 @@ import { Modal, Button } from "react-bootstrap";
 import PostComp from "./sub/post-by-id.sub.component";
 import backendAddress from "../helpers/backend-address";
 import { authenticationService } from "../services/authentication.service";
-import Comment from "./sub/comment.sub.component";
+import Comment from "./sub/comment-by-id.sub.component";
 import PostNotFound from "./sub/post-not-found.sub.component";
 
 export default class HomeFeed extends Component {
@@ -39,51 +39,12 @@ export default class HomeFeed extends Component {
       });
   }
 
-  editPost() {
-    this.props.history.push("/edit/post/" + this.state.id);
-  }
-
-  deletePost() {
-    axios
-      .delete(`${backendAddress()}/post/` + this.state.id)
-      .then((response) => {
-        this.props.history.push("/");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  handleCloseDeletePopUp() {
-    this.setState({
-      showDeletePopUp: false,
-    });
-  }
-
-  handleShowDeletePopUp() {
-    this.setState({
-      showDeletePopUp: true,
-    });
-  }
-
   commentList() {
     return this.state.comments.map((currentComment) => {
       const username = "";
-      axios
-        .get(`${backendAddress()}/user/` + currentComment.user)
-        .then((response) => {
-          username = response.data.username;
-        })
-        .catch((error) => {
-          console.log(error);
-          username = "[deleted]";
-        });
       return (
         <Comment
-          key={currentComment._id}
-          userName={username}
-          date={currentComment.date}
-          body={currentComment.body}
+          id={currentComment._id}
         />
       );
     });
@@ -99,7 +60,7 @@ export default class HomeFeed extends Component {
           <>
             <div class="container">
               <PostComp
-                key={this.state._id}
+                id={this.state._id}
               />
             </div>
             <div class="container">
