@@ -40,7 +40,6 @@ class PostId extends Component {
                 forumid: response.data.forum,
                 date: response.data.date,
             });
-            console.log(response);
         })
         .catch(error => {
             console.log(error);
