@@ -30,12 +30,12 @@ export default class HomeFeed extends Component {
           comments: response.data,
           gettingData: false
         })
-        .catch(error => {
-          console.log(error);
-          this.setState({
-            gettingData: false
-          });
-        })
+      })
+      .catch(error => {
+        console.log(error);
+        this.setState({
+          gettingData: false
+        });
       });
   }
 
@@ -60,7 +60,7 @@ export default class HomeFeed extends Component {
           <>
             <div class="container">
               <PostComp
-                id={this.state._id}
+                id={this.props.match.params.id}
               />
             </div>
             <div class="container">

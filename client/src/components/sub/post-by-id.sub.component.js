@@ -39,7 +39,8 @@ class PostId extends Component {
                 body: response.data.body,
                 forumid: response.data.forum,
                 date: response.data.date,
-            })
+            });
+            console.log(response);
         })
         .catch(error => {
             console.log(error);
@@ -87,12 +88,12 @@ class PostId extends Component {
         })
     }
 
-    editPost(id) {
-      this.props.history.push("/post/edit/" + id);
+    editPost() {
+      this.props.history.push("/post/edit/" + this.state.id);
     }
   
-    showPost(id) {
-      this.props.history.push("/post/" + id);
+    showPost() {
+      this.props.history.push("/post/" + this.state.id);
     }
   
     deletePost() {
