@@ -7,7 +7,6 @@ import backendAddress from "../helpers/backend-address";
 import { authenticationService } from "../services/authentication.service";
 import Comment from "./sub/comment.sub.component";
 import PostNotFound from "./sub/post-not-found.sub.component";
-import EmptyPage from "./sub/empty.sub.component";
 
 export default class HomeFeed extends Component {
   constructor(props) {
@@ -161,7 +160,7 @@ export default class HomeFeed extends Component {
               {this.commentList().length > 0 ? (
                 this.commentList()
               ) : (
-                <EmptyPage />
+                <></>
               )}
             </div>
           </>

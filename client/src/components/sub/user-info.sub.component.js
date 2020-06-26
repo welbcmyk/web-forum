@@ -1,13 +1,18 @@
 import React from "react";
 import { BrowserRouter as Link } from "react-router-dom";
+import {Card} from "react-bootstrap";
 
 function UserInfo(props) {
   return (
-    <div>
-      <h1>{props.name}</h1>
-      <br />
-      <span class="font-italic text-muted">joined on {props.joinedDate}</span>
-    </div>
+    <Card>
+      <Card.Body>
+        <div>
+          <h1 style={{height: "auto", width: "50rem"}}>{props.name}</h1>
+          <br />
+          <span class="font-italic text-muted">joined on {props.joinedDate}</span>
+        </div>
+      </Card.Body>
+    </Card>
   );
 }
 
