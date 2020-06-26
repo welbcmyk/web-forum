@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Modal, Button } from "react-bootstrap";
 
-import PostComp from "./sub/post.sub.component";
+import PostComp from "./sub/post-by-id.sub.component";
 import backendAddress from "../helpers/backend-address";
 import { authenticationService } from "../services/authentication.service";
 import Comment from "./sub/comment.sub.component";
@@ -13,76 +13,29 @@ export default class HomeFeed extends Component {
     super(props);
 
     this.commentList = this.commentList.bind(this);
-    this.editPost = this.editPost.bind(this);
-    this.deletePost = this.deletePost.bind(this);
-    this.handleCloseDeletePopUp = this.handleCloseDeletePopUp.bind(this);
-    this.handleShowDeletePopUp = this.handleShowDeletePopUp.bind(this);
 
     this.state = {
       comments: [],
-      showDeletePopUp: false,
-      username: "",
-      userid: "",
-      forumname: "",
-      forumid: "",
-      title: "",
-      body: "",
-      createdDate: "",
       id: "",
+      gettingData: true
     };
   }
 
   componentDidMount() {
-    axios
-      .get(backendAddress() + "/posts/" + this.props.match.params.id)
-      .then((response) => {
-        this.setState({
-          id: response.data._id,
-          title: response.data.title,
-          body: response.data.body,
-          userid: response.data.user,
-          forumid: response.data.forum,
-          createdDate: response.data.date,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    axios
-      .get(`${backendAddress()}/user/` + this.state.userid)
-      .then((response) => {
-        this.setState({
-          username: response.data.username,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        this.setState({
-          username: "[deleted]",
-        });
-      });
-
-    axios
-      .get(`${backendAddress()}/forum/` + this.state.forumid)
-      .then((response) => {
-        this.setState({
-          forumname: response.data.name,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        this.setState({
-          forumname: "[deleted]",
-        });
-      });
 
     axios
       .get(backendAddress() + "/comments/post/" + this.props.match.params.id)
       .then((response) => {
         this.setState({
           comments: response.data,
-        });
+          gettingData: false
+        })
+        .catch(error => {
+          console.log(error);
+          this.setState({
+            gettingData: false
+          });
+        })
       });
   }
 
@@ -137,6 +90,7 @@ export default class HomeFeed extends Component {
   }
 
   render() {
+    if(this.state.gettingData) return null;
     return (
       <>
         {this.state.title === "" ? (
@@ -146,14 +100,6 @@ export default class HomeFeed extends Component {
             <div class="container">
               <PostComp
                 key={this.state._id}
-                subTitle={this.state.username + " " + this.state.forumname}
-                date={this.state.date}
-                title={this.state.title}
-                body={this.state.body}
-                commentCount={this.state.comments.length}
-                ownPost={authenticationService.currentUserValue}
-                onPostEdit={this.editPost}
-                onPostDelete={this.handleShowDeletePopUp}
               />
             </div>
             <div class="container">
