@@ -17,20 +17,21 @@ function Post(props) {
           <div style={{height: "auto", width: "50rem"}}>{props.body}</div>
           <div class="d-flex justify-content-between">
             <div class="text-mute">{props.commentCount} Comments</div>
-            <div>
+            <span><i onClick={props.commentPost} class="fa fa-reply" aria-hidden="true"></i></span>
+            <span>
               {props.showEdit ? (
                 <div onClick={props.onPostEdit} class="fa fa-pencil"></div>
               ) : (
                 ""
               )}
-            </div>
-            <div>
+            </span>
+            <span>
               {props.showDelete ? (
                 <div onClick={props.onPostDelete} class="bi bi-trash"></div>
               ) : (
                 ""
               )}
-            </div>
+            </span>
           </div>
         </div>
       </Card.Body>

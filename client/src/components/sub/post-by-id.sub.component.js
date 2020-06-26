@@ -127,6 +127,7 @@ class PostId extends Component {
                 showDelete={authenticationService.currentUserValue}
                 onPostEdit={this.editPost}
                 onClickPost={this.props.onClickPost}
+                commentPost={() => {this.props.history.push("/comment/"+this.state.id)}}
                 />
                 <Modal
                 show={this.state.showDeletePopUp}
