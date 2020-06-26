@@ -11,7 +11,6 @@ class PostId extends Component {
     constructor(props) {
         super(props);
         this.editPost = this.editPost.bind(this);
-        this.showPost = this.showPost.bind(this);
         this.deletePost = this.deletePost.bind(this);
         this.handleCloseDeletePopUp = this.handleCloseDeletePopUp.bind(this);
         this.handleShowDeletePopUp = this.handleShowDeletePopUp.bind(this);
@@ -91,10 +90,6 @@ class PostId extends Component {
       this.props.history.push("/post/edit/" + this.state.id);
     }
   
-    showPost() {
-      this.props.history.push("/post/" + this.state.id);
-    }
-  
     deletePost() {
       axios
         .delete(`${backendAddress()}/post/` + this.state.id)
@@ -131,7 +126,7 @@ class PostId extends Component {
                 showEdit={authenticationService.currentUserValue}
                 showDelete={authenticationService.currentUserValue}
                 onPostEdit={this.editPost}
-                onClickPost={this.showPost}
+                onClickPost={this.props.onClickPost}
                 />
                 <Modal
                 show={this.state.showDeletePopUp}
