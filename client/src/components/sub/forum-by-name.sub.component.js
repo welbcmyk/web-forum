@@ -65,6 +65,7 @@ export default class Forum extends Component {
               createdDate={this.state.createdDate}
               description={this.state.description}
               username={this.state.username}
+              onClickForum={this.props.onClickForum}
             />
         );
     }

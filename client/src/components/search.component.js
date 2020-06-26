@@ -91,6 +91,7 @@ export default class Search extends Component {
       return (
         <ForumInfo
           name={currentForum.name}
+          onClickForum={() => {this.props.history.push("/forum/"+currentForum.name)}}
         />
       );
     });

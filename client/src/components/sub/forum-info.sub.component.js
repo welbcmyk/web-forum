@@ -5,7 +5,7 @@ import {Card} from "react-bootstrap";
 function ForumInfo(props) {
   return (
     
-    <Card>
+    <Card onClick={props.onClickForum}>
       <Card.Body>
         <div>
           <h1>{props.name}</h1>
