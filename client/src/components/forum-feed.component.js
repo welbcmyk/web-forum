@@ -5,58 +5,20 @@ import PostComp from "./sub/post-by-id.sub.component";
 import backendAddress from "../helpers/backend-address";
 import { authenticationService } from "../services/authentication.service";
 import EmptyPage from "./sub/empty.sub.component";
-import ForumInfo from "./sub/forum-info.sub.component";
+import ForumInfo from "./sub/forum-by-name.sub.component";
 import ForumNotFound from "./sub/ForumNotFound.sub.component";
 
-export default class HomeFeed extends Component {
+export default class ForumFeed extends Component {
   constructor(props) {
     super(props);
 
     this.postList = this.postList.bind(this);
-    this.getForum = this.getForum.bind(this);
-    this.getUser = this.getUser.bind(this);
     this.getPosts = this.getPosts.bind(this);
 
     this.state = {
       posts: [],
-      name: "",
-      id: "",
-      createdDate: "",
-      description: "",
-      username: "",
-      userid: "",
-      gettingData: true
+      gettingPosts: true
     };
-  }
-
-  getForum() {
-    return axios
-      .get(backendAddress() + "/forum/name/" + this.props.match.params.name)
-      .then((response) => {
-        this.setState({
-          userid: response.data.user,
-          id: response.data._id,
-          createdDate: response.data.date,
-          name: response.data.name,
-          description: response.data.description,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  getUser() {
-    return axios
-    .get(backendAddress() + "/user/" + this.state.userid)
-    .then((response) => {
-      this.setState({
-        username: response.data.username,
-      });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
   }
 
   getPosts(){
@@ -73,16 +35,10 @@ export default class HomeFeed extends Component {
   }
 
   componentDidMount() {
-    this.getForum()
-    .finally(() => {
-      return this.getUser()
-    })
-    .finally(() => {
-      return this.getPosts();
-    })
+    this.getPosts()
     .finally(() => {
       this.setState({
-        gettingData: false
+        gettingPosts: false
       });
     })
   }
@@ -98,7 +54,7 @@ export default class HomeFeed extends Component {
   }
 
   render() {
-    if(this.state.gettingData) return null;
+    if(this.state.gettingPosts) return null;
     return (
       <>
         {this.state.name === "" ? (
@@ -107,10 +63,7 @@ export default class HomeFeed extends Component {
           <>
             <div class="container">
               <ForumInfo
-                name={this.state.name}
-                createdDate={this.state.createdDate}
-                description={this.state.description}
-                username={this.state.username}
+                name={this.props.match.params.name}
               />
             </div>
             <div class="container">
