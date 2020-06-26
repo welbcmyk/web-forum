@@ -13,18 +13,29 @@ export default class Search extends Component {
     super(props);
 
     this.postList = this.postList.bind(this);
+    this.fetchData = this.fetchData.bind(this);
 
     this.state = {
       posts: [],
+      searchterm: "",
       gettingPosts: true,
       gettingForums: true
     };
   }
 
-  componentDidMount() {
+  componentWillReceiveProps(nextProps) {
+    console.log("prop: "+nextProps.match.params.searchterm)
+    this.setState({
+      searchterm: nextProps.match.params.searchterm
+    }, () => {
+    this.fetchData();
+    })
+  }
+
+  fetchData(){
     axios
       .get(
-        backendAddress() + "/posts/search/" + this.props.match.params.searchterm
+        backendAddress() + "/posts/search/" + this.state.searchterm
       )
       .then((response) => {
         this.setState({
@@ -38,22 +49,30 @@ export default class Search extends Component {
           gettingPosts: false
         });
       });
-      axios
-        .get(
-          backendAddress() + "/forums/search/" + this.props.match.params.searchterm
-        )
-        .then((response) => {
-          this.setState({
-            forums: response.data,
-            gettingForums: false
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-          this.setState({
-            gettingForums: false
-          });
+    axios
+      .get(
+        backendAddress() + "/forums/search/" + this.state.searchterm
+      )
+      .then((response) => {
+        this.setState({
+          forums: response.data,
+          gettingForums: false
         });
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({
+          gettingForums: false
+        });
+      });
+    }
+
+  componentDidMount() {
+    this.setState({
+      searchterm: this.props.match.params.searchterm
+    }, () => {
+    this.fetchData();
+    });
   }
 
   postList() {
@@ -77,13 +96,13 @@ export default class Search extends Component {
   }
 
   render() {
-    if(this.state.gettingPosts) return null;
+    if(this.state.gettingPosts || this.state.gettingForums) return null;
     return (
-    <Tabs >
+    <Tabs defaultActiveKey="posts" id="search-tab">
       <Tab eventKey="posts" title="Posts">
         {this.postList().length > 0 ? this.postList() : <EmptyPage />}
       </Tab>
-      <Tab>
+      <Tab eventKey="forums" title="Forum">
         {this.forumList().length > 0 ? this.forumList() : <EmptyPage/>}
       </Tab>
     </Tabs>)
