@@ -33,11 +33,11 @@ export default class HomeFeed extends Component {
   }
 
   editPost(id) {
-    this.props.history.push("/post/edit/" + id);
+    return () => {this.props.history.push("/post/edit/" + id)};
   }
 
   showPost(id) {
-    this.props.history.push("/post/" + id);
+    return () => {this.props.history.push("/post/" + id)};
   }
 
   postList() {
