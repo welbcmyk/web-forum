@@ -22,24 +22,28 @@ function Post(props) {
           <div style={{height: "auto", width: "50rem"}}>{props.body}</div>
           <div class="d-flex justify-content-between">
             <div class="text-mute">{props.commentCount} Comments</div>
-            <span><i onClick={props.commentPost} class="fa fa-reply" aria-hidden="true"></i></span>
-            <span>
-              {props.showEdit ? (
-                <div onClick={props.onPostEdit} class="fa fa-pencil"></div>
-              ) : (
-                ""
-              )}
-            </span>
-            <span>
-              {props.showDelete ? (
-                <div onClick={props.onPostDelete} class="bi bi-trash"></div>
-              ) : (
-                ""
-              )}
-            </span>
           </div>
         </div>
       </Card.Body>
+      <Card.Footer>
+        <span>
+          {props.showEdit ? (
+            <i onClick={props.onPostEdit} style={{margin: "0px 20px"}} class="fa fa-pencil float-right"></i>
+          ) : (
+            ""
+          )}
+        </span>
+        <span>
+          {props.showDelete ? (
+            <i onClick={props.onPostDelete} style={{margin: "0px 20px"}} class="fa fa-trash float-right"></i>
+          ) : (
+            ""
+          )}
+        </span>
+        <span>
+          <i onClick={props.commentPost} style={{margin: "0px 20px"}} class="fa fa-reply float-right" aria-hidden="true"></i>
+        </span>
+      </Card.Footer>
     </Card>
   );
 }

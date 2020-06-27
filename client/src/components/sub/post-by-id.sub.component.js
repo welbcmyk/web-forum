@@ -103,10 +103,11 @@ class PostId extends Component {
       axios
         .delete(`${backendAddress()}/post/` + this.state.id)
         .then((response) => {
-          this.props.history.push("/");
+          this.props.history.go();
         })
         .catch((error) => {
           console.log(error);
+          this.props.history.go();
         });
     }
   
@@ -143,9 +144,10 @@ class PostId extends Component {
                 title={this.state.title}
                 body={this.state.body}
                 commentCount={this.state.commentCount}
-                showEdit={authenticationService.currentUserValue}
-                showDelete={authenticationService.currentUserValue}
+                showEdit={this.state.userid == authenticationService.currentUserValue._id}
+                showDelete={this.state.userid == authenticationService.currentUserValue._id}
                 onPostEdit={this.editPost}
+                onPostDelete={this.handleShowDeletePopUp}
                 onClickPost={this.props.onClickPost}
                 commentPost={this.commentPost}
                 showUser={this.showUser}
