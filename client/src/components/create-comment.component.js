@@ -53,7 +53,7 @@ export default class CreateComment extends Component {
       .post(`${backendAddress()}/comments/add`, comment)
       .then((res) => {
         console.log(res.data);
-        this.props.history.push("/");
+        this.props.history.push("/post/" + this.state.postid);
       })
       .catch((error) => {
         console.log(error);

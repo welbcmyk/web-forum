@@ -98,7 +98,7 @@ export default class SubmitPost extends Component {
       .post(`${backendAddress()}/posts/add`, post)
       .then((res) => {
         console.log(res.data);
-        this.props.history.push("/");
+        this.props.history.push("/forum/" + this.state.forums.find(forum => forum._id == this.state.forumid).name);
       })
       .catch((error) => {
         console.log("Error: " + error);
