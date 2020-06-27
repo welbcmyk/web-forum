@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 
 import backendAddress from "../../helpers/backend-address";
 import ForumInfo from "./forum-info.sub.component";
+import {authenticationService} from "../../services/authentication.service";
 
 class Forum extends Component {
     constructor(props) {
@@ -12,6 +13,7 @@ class Forum extends Component {
         this.getForum = this.getForum.bind(this);
         this.getUser = this.getUser.bind(this); 
         this.showUser = this.showUser.bind(this);
+        this.addPost = this.addPost.bind(this);
 
         this.state = {
             name: "",
@@ -56,13 +58,28 @@ class Forum extends Component {
     componentDidMount() {
       this.getForum()
       .finally(() => {
-        return this.getUser()
+        return this.getUser();
       })
     }
 
     showUser(e) {
       e.stopPropagation ();
       this.props.history.push("/user/" + this.state.username);
+    }
+
+    editForum(e) {
+      e.stopPropagation ();
+      this.props.history.push("/edit/forum/" + this.state.name);
+    }
+
+    editForum(e) {
+      e.stopPropagation ();
+      this.props.history.push("/create/post/" + this.state.name);
+    }
+
+    addPost(e) {
+      e.stopPropagation();
+      this.props.history.push("/create/post/" + this.state.name);
     }
     
     render () {
@@ -74,6 +91,9 @@ class Forum extends Component {
               username={this.state.username}
               onClickForum={this.props.onClickForum}
               showUser={this.showUser}
+              showEdit={this.state.userid == authenticationService.currentUserValue._id}
+              editForum={this.editForum}
+              onClickPost={this.addPost}
             />
         );
     }

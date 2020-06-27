@@ -32,6 +32,7 @@ class App extends Component {
           <Route path="/forum/:name" exact component={ForumFeed} />
           <Route path="/post/:id" exact component={Post} />
           <PrivateRoute path="/create/post" exact component={CreatePost} />
+          <PrivateRoute path="/create/post/:forumName" exact component={CreatePost} />
           <PrivateRoute path="/create/forum" exact component={CreateForum} />
           <PrivateRoute
             path="/create/comment/:id"

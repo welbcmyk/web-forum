@@ -29,6 +29,12 @@ export default class SubmitPost extends Component {
     };
   }
 
+  forumNameArray() {
+    return this.state.forums.map(currentForum => {
+      return currentForum.name;
+    });
+  }
+
   toggle() {
     this.setState({
       dropdownOpen: !this.state.dropdownOpen,
@@ -49,7 +55,14 @@ export default class SubmitPost extends Component {
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
+      .finally(() => {   
+        if(this.props.match.params.forumName && this.forumNameArray().includes(this.props.match.params.forumName)){
+          this.setState({
+            forumid: this.state.forums.find(forum => forum.name == this.props.match.params.forumName)._id
+          })
+        }
+      })
   }
   onSubmit(e) {
     e.preventDefault();
