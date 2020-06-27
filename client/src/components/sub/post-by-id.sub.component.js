@@ -15,6 +15,8 @@ class PostId extends Component {
         this.deletePost = this.deletePost.bind(this);
         this.handleCloseDeletePopUp = this.handleCloseDeletePopUp.bind(this);
         this.handleShowDeletePopUp = this.handleShowDeletePopUp.bind(this);
+        this.showForum = this.showForum.bind(this);
+        this.showUser = this.showUser.bind(this);
 
         this.state = {
             id: props.id,
@@ -120,12 +122,23 @@ class PostId extends Component {
       });
     }
 
+    showUser(e) {
+      e.stopPropagation ();
+      this.props.history.push("/user/" + this.state.username);
+    }
+
+    showForum(e) {
+      e.stopPropagation ();
+      this.props.history.push("/forum/" + this.state.forumName);
+    }
+
     render() {
         return (
             <>
                 <Post
                 id={this.state.id}
-                subTitle={this.state.username + " " + this.state.forumName}
+                username={this.state.username}
+                forumName={this.state.forumName}
                 date={this.state.date}
                 title={this.state.title}
                 body={this.state.body}
@@ -135,6 +148,8 @@ class PostId extends Component {
                 onPostEdit={this.editPost}
                 onClickPost={this.props.onClickPost}
                 commentPost={this.commentPost}
+                showUser={this.showUser}
+                showForum={this.showForum}
                 />
                 <Modal
                 show={this.state.showDeletePopUp}

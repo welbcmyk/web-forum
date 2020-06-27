@@ -6,8 +6,14 @@ function Post(props) {
     <Card>
       <Card.Body>
         <div onClick={props.onClickPost}>
+          <span class="text-muted small" onClick={props.showUser}>
+            {props.username}
+          </span>
           <span class="text-muted small">
-            {props.subTitle}
+            {" "}
+          </span>
+          <span class="text-muted small" onClick={props.showForum}>
+            {props.forumName}
           </span>
           <div class="text-muted small">
             {props.date}
