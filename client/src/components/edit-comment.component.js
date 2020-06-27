@@ -97,7 +97,7 @@ export default class EditCommentPage extends Component {
   }
 
   validateBody() {
-    return this.state.body > 0;
+    return this.state.body.length > 0;
   }
 
   render() {

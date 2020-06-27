@@ -107,7 +107,7 @@ export default class CreateForum extends Component {
   }
 
   validateDescription() {
-    return this.state.description > 0;
+    return this.state.description.length > 0;
   }
   render() {
     return (

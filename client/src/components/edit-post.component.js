@@ -146,11 +146,11 @@ export default class EditPostPage extends Component {
   }
 
   validateTitle() {
-    return this.state.title > 0;
+    return this.state.title.length > 0;
   }
 
   validateBody() {
-    return this.state.body > 0;
+    return this.state.body.length > 0;
   }
 
   validateForum() {

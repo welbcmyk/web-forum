@@ -122,13 +122,13 @@ export default class EditForumPage extends Component {
       })
       .finally(() => {
         this.setState({
-          validForumName: this.state.name > 0 && isAvailable,
+          validForumName: this.state.name.length > 0 && isAvailable,
         });
       });
   }
 
   validateDescription() {
-    return this.state.description > 0;
+    return this.state.description.length > 0;
   }
   render() {
     return (
