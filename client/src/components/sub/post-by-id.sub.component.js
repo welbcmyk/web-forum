@@ -10,6 +10,7 @@ import {authenticationService} from "../../services/authentication.service";
 class PostId extends Component {
     constructor(props) {
         super(props);
+        this.commentPost = this.commentPost.bind(this);
         this.editPost = this.editPost.bind(this);
         this.deletePost = this.deletePost.bind(this);
         this.handleCloseDeletePopUp = this.handleCloseDeletePopUp.bind(this);
@@ -71,7 +72,7 @@ class PostId extends Component {
                 })
               });
             axios
-              .get(`${backendAddress()}/comments/commentCount/` + this.state._id)
+              .get(`${backendAddress()}/comments/commentCount/` + this.state.id)
               .then((response) => {
                 this.setState({
                     commentCount: response.data.count,
@@ -86,7 +87,13 @@ class PostId extends Component {
         })
     }
 
-    editPost() {
+    commentPost(e){
+      e.stopPropagation();
+      this.props.history.push("/create/comment/"+this.state.id);
+    }
+
+    editPost(e) {
+      e.stopPropagation();
       this.props.history.push("/post/edit/" + this.state.id);
     }
   
@@ -127,14 +134,14 @@ class PostId extends Component {
                 showDelete={authenticationService.currentUserValue}
                 onPostEdit={this.editPost}
                 onClickPost={this.props.onClickPost}
-                commentPost={() => {this.props.history.push("/comment/"+this.state.id)}}
+                commentPost={this.commentPost}
                 />
                 <Modal
                 show={this.state.showDeletePopUp}
                 onHide={this.handleCloseDeletePopUp}
                 >
                 <Modal.Header closeButton>
-                    <Modal.Title>Deleting Post</Modal.Title>
+                    <Modal.Title>Deleting Post</Modal.Title> 
                 </Modal.Header>
                 <Modal.Body>Are you sure you want to delete this Post?</Modal.Body>
                 <Modal.Footer>
