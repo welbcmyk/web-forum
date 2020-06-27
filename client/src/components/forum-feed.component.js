@@ -71,7 +71,8 @@ export default class ForumFeed extends Component {
           onClickPost={() => {this.props.history.push("/post/"+currentPost._id)}}
         />
       );
-    });
+    })
+    .reverse();
   }
 
   render() {

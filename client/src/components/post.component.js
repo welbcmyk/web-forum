@@ -47,7 +47,8 @@ export default class HomeFeed extends Component {
           key={currentComment._id}
         />
       );
-    });
+    })
+    .reverse();
   }
 
   render() {
