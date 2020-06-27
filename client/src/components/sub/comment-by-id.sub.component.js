@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import backendAddress from "../../helpers/backend-address";
 
+import CommentComp from "./comment.sub.component";
+
 export default class Comment extends Component {
     constructor(props){
         super(props);
@@ -17,7 +19,7 @@ export default class Comment extends Component {
     }
 
     componentDidMount() {
-        axios.get(`${backendAddress()}/comment/${this.props.id}`)
+        axios.get(`${backendAddress()}/comment/` + this.props.id)
         .then(response => {
             this.setState({
                 id: response.data._id,
@@ -47,7 +49,7 @@ export default class Comment extends Component {
 
     render(){
         return (
-          <Comment
+          <CommentComp
             id={this.state._id}
             userName={this.state.username}
             date={this.state.date}
