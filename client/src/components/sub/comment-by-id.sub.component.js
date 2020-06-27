@@ -63,7 +63,7 @@ class Comment extends Component {
 
     editComment(e){
         e.stopPropagation();
-        this.props.history.push("/comment/edit/" + this.state._id);
+        this.props.history.push("/edit/comment/" + this.state._id);
     }
 
     editComment(e){

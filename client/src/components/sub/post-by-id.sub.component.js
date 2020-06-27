@@ -96,7 +96,7 @@ class PostId extends Component {
 
     editPost(e) {
       e.stopPropagation();
-      this.props.history.push("/post/edit/" + this.state.id);
+      this.props.history.push("/edit/post/" + this.state.id);
     }
   
     deletePost() {
