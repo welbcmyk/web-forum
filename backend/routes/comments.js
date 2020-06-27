@@ -57,14 +57,10 @@ router.route("/post/:id").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/commentCount/:postid").get(function (req, res) {
-  Comment.count({ post: req.params.postid }, function (err, result) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.json({ count: result });
-    }
-  });
+router.route("/commentCount/:postid").get((req, res) => {
+  Comment.countDocuments({ post: req.params.postid })
+  .then(result => res.json({ count: result }))
+  .catch(err => console.log(err));
 });
 
 module.exports = router;
