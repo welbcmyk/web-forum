@@ -14,17 +14,20 @@ export default class ForumFeed extends Component {
 
     this.postList = this.postList.bind(this);
     this.getPosts = this.getPosts.bind(this);
+    this.getForum = this.getForum.bind(this);
 
     this.state = {
       posts: [],
+      id: "",
       gettingPosts: true
     };
   }
 
   getPosts(){
     return  axios
-    .get(backendAddress() + "/posts/forum/" + this.props.match.params.id)
+    .get(backendAddress() + "/posts/forum/" + this.state.id)
     .then((response) => {
+      console.log(response);
       this.setState({
         posts: response.data,
       });
@@ -34,12 +37,28 @@ export default class ForumFeed extends Component {
     });
   }
 
-  componentDidMount() {
-    this.getPosts()
-    .finally(() => {
-      this.setState({
-        gettingPosts: false
+  getForum() {
+    return axios
+      .get(backendAddress() + "/forum/name/" + this.props.match.params.name)
+      .then((response) => {
+        this.setState({
+          id: response.data._id,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
       });
+  }
+
+  componentDidMount() {
+    this.getForum()
+    .finally(() => {
+      this.getPosts()
+      .finally(() => {
+        this.setState({
+          gettingPosts: false
+        });
+      })
     })
   }
 
