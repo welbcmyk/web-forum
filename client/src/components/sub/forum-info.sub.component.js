@@ -1,5 +1,4 @@
 import React from "react";
-import { BrowserRouter as Link } from "react-router-dom";
 import {Card} from "react-bootstrap";
 
 function ForumInfo(props) {
@@ -13,9 +12,9 @@ function ForumInfo(props) {
           <div style={{height: "auto", width: "50rem"}}>{props.description}</div>
           <div>
             created by{" "}
-            <Link class="font-italic " to={"/user/" + props.username}>
+            <span class="font-italic " onClick={props.showUser}>
               {props.username}
-            </Link>
+            </span>
           </div>
           <span class="font-italic text-muted"> on {props.createdDate}</span>
         </div>

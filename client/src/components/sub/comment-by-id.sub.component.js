@@ -54,6 +54,7 @@ export default class Comment extends Component {
             userName={this.state.username}
             date={this.state.date}
             body={this.state.body}
+            editComment={() => this.props.history.push("/comment/edit/" + this.state._id)}
           />
         );
     }

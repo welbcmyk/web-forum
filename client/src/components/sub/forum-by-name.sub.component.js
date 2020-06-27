@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { withRouter } from "react-router-dom";
 
 import backendAddress from "../../helpers/backend-address";
 import ForumInfo from "./forum-info.sub.component";
 
-export default class Forum extends Component {
+class Forum extends Component {
     constructor(props) {
         super(props);
         
         this.getForum = this.getForum.bind(this);
         this.getUser = this.getUser.bind(this); 
+        this.showUser = this.showUser.bind(this);
 
         this.state = {
             name: "",
@@ -57,6 +59,11 @@ export default class Forum extends Component {
         return this.getUser()
       })
     }
+
+    showUser(e) {
+      e.stopPropagation ();
+      this.props.history.push("/user/" + this.state.username);
+    }
     
     render () {
         return (
@@ -66,7 +73,10 @@ export default class Forum extends Component {
               description={this.state.description}
               username={this.state.username}
               onClickForum={this.props.onClickForum}
+              showUser={this.showUser}
             />
         );
     }
 }
+
+export default withRouter(Forum);

@@ -8,23 +8,23 @@ import backendAddress from "../helpers/backend-address";
 import logo from "../images/logo1.png";
 
 function LogIn(props) {
-  return <Nav.Link href="/login">Log In</Nav.Link>;
+  return <Nav.Item onClick={props.onClick}><Nav.Link>Log In</Nav.Link></Nav.Item>;
 }
 
-function SignUp() {
-  return <Nav.Link href="/signup">Sign Up</Nav.Link>;
+function SignUp(props) {
+  return <Nav.Item onClick={props.onClick}><Nav.Link>Sign Up</Nav.Link></Nav.Item>;
 }
 
-function CreatePost() {
-  return <Nav.Link href="/create/post">Create Post</Nav.Link>;
+function CreatePost(props) {
+  return <Nav.Item onClick={props.onClick}><Nav.Link>Create Post</Nav.Link></Nav.Item>;
 }
 
-function CreateForum() {
-  return <Nav.Link href="/create/forum">Create Forum</Nav.Link>;
+function CreateForum(props) {
+  return <Nav.Item onClick={props.onClick}><Nav.Link>Create Forum</Nav.Link></Nav.Item>;
 }
 
 function Profil(props) {
-  return <Nav.Link href={"/user/" + props.username}>Profil</Nav.Link>;
+  return <Nav.Item onClick={props.onClick}><Nav.Link>Profil</Nav.Link></Nav.Item>;
 }
 
 function Settings(props) {
@@ -148,11 +148,11 @@ class NavbarComp extends Component {
           </Navbar.Brand>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              {this.loggedIn() ? <CreateForum /> : ""}
-              {this.loggedIn() ? <CreatePost /> : ""}
+              {this.loggedIn() ? <CreateForum onClick={() => this.props.history.push("/create/forum")} /> : ""}
+              {this.loggedIn() ? <CreatePost onClick={() => this.props.history.push("/create/post")}/> : ""}
               {this.loggedIn() ? (
                 <Profil
-                  username={authenticationService.currentUserValue.username}
+                  onClick={() => this.props.history.push("/user/" + authenticationService.currentUserValue.username)}
                 />
               ) : (
                 ""
@@ -169,8 +169,8 @@ class NavbarComp extends Component {
               ) : (
                 ""
               )}
-              {!this.loggedIn() ? <LogIn /> : ""}
-              {!this.loggedIn() ? <SignUp /> : ""}
+              {!this.loggedIn() ? <LogIn onClick={() => this.props.history.push("/login")}/> : ""}
+              {!this.loggedIn() ? <SignUp onClick={() => this.props.history.push("/signup")}/> : ""}
             </Nav>
             <SearchBar
               value={this.state.searchTerm}

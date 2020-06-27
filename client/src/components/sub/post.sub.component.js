@@ -1,7 +1,6 @@
 import React from "react";
 import "../../App.css";
 import {Card} from "react-bootstrap";
-// TODO delete all Links and refactor whole code
 function Post(props) {
   return (
     <Card>

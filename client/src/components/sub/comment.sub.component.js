@@ -1,5 +1,4 @@
 import React from "react";
-import { BrowserRouter as Link } from "react-router-dom";
 import {Card} from "react-bootstrap";
 
 function Comment(props) {
@@ -14,7 +13,7 @@ function Comment(props) {
           <div style={{height:"auto", width:"50rem"}}>{props.body}</div>
           <div>
             {props.ownComment ? (
-              <Link to={"/comment/edit/" + props.id} class="fa fa-pencil"></Link>
+              <i onClick={props.editComment} class="fa fa-pencil"></i>
             ) : (
               ""
             )}
