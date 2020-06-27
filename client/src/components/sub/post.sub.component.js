@@ -16,7 +16,7 @@ function Post(props) {
             {props.forumName}
           </span>
           <div class="text-muted small">
-            {props.date}
+            {(new Date(props.date)).toLocaleDateString()}
           </div>
           <h1>{props.title}</h1>
           <div style={{height: "auto", width: "50rem"}}>{props.body}</div>

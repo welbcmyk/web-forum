@@ -11,7 +11,7 @@ function Comment(props) {
             {props.userName}
           </div>
           <div class="text-muted small">
-            {props.date}
+            {(new Date(props.date)).toLocaleDateString()}
           </div>
           <div style={{height:"auto", width:"50rem"}}>{props.body}</div>
         </div>

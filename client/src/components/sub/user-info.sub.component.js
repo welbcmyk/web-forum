@@ -8,7 +8,7 @@ function UserInfo(props) {
         <div>
           <h1 style={{height: "auto", width: "50rem"}}>{props.name}</h1>
           <br />
-          <span class="font-italic text-muted">joined on {props.joinedDate}</span>
+          <span class="font-italic text-muted">joined on {(new Date(props.joinedDate)).toLocaleDateString()}</span>
         </div>
       </Card.Body>
     </Card>

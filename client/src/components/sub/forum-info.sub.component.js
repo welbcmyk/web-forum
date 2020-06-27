@@ -16,7 +16,7 @@ function ForumInfo(props) {
               {props.username}
             </span>
           </div>
-          <span class="font-italic text-muted"> on {props.createdDate}</span>
+          <span class="font-italic text-muted"> on {(new Date(props.createdDate)).toLocaleDateString()}</span>
         </div>
       </Card.Body>
         <Card.Footer>
