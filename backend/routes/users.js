@@ -32,7 +32,7 @@ router.route("/:id").get((req, res) => {
 });
 
 router.route("/name/:name").get((req, res) => {
-  User.find({ name: req.params.name })
+  User.findOne({ username: req.params.name })
     .then((user) => res.json(user))
     .catch((err) => res.status(400).json("Error: " + err));
 });
@@ -65,7 +65,7 @@ router.route("/update/:id").post((req, res) => {
 });
 
 router.route("/update/name/:name").post((req, res) => {
-  User.find({ name: req.params.name })
+  User.find({ username: req.params.name })
     .then((user) => {
       user.email = req.body.email;
       user.password = req.body.password;
@@ -80,7 +80,7 @@ router.route("/update/name/:name").post((req, res) => {
 });
 
 router.route("/check/:name").get((req, res) => {
-  User.findOne({ name: req.params.name })
+  User.findOne({ username: req.params.name })
     .then((user) => {
       res.json({ isAvailable: user == null });
     })
