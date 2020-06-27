@@ -14,6 +14,7 @@ class Forum extends Component {
         this.getUser = this.getUser.bind(this); 
         this.showUser = this.showUser.bind(this);
         this.addPost = this.addPost.bind(this);
+        this.editForum = this.editForum.bind(this);
 
         this.state = {
             name: "",
@@ -70,11 +71,6 @@ class Forum extends Component {
     editForum(e) {
       e.stopPropagation ();
       this.props.history.push("/edit/forum/" + this.state.name);
-    }
-
-    editForum(e) {
-      e.stopPropagation ();
-      this.props.history.push("/create/post/" + this.state.name);
     }
 
     addPost(e) {
