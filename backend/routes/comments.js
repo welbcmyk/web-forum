@@ -7,6 +7,12 @@ let Comment = require("../models/comment.model");
     .catch(err => res.status(400).json('Error: ' + err));
 });*/
 
+router.route('/:id').get((req, res) => {
+    Comment.findById(req.params.id)
+    .then(comments => res.json(comments))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route("/add").post((req, res) => {
   const user = req.body.user;
   const body = req.body.body;
