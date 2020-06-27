@@ -28,6 +28,8 @@ export default class EditPostPage extends Component {
       dropdownOpen: false,
       submitError: "",
       postid: "",
+      gettingPosts: true,
+      gettingForums: true,
     };
   }
 
@@ -50,10 +52,14 @@ export default class EditPostPage extends Component {
       .then((response) => {
         this.setState({
           forums: response.data,
+          gettingForums: false,
         });
       })
       .catch((error) => {
         console.log(error);
+        this.setState({
+          gettingForums: false,
+        });
       });
 
     axios
@@ -68,11 +74,15 @@ export default class EditPostPage extends Component {
           body: res.data.body,
           postid: res.data._id,
           forumid: res.data.forum,
+          gettingPosts: false,
         });
       })
       .catch((error) => {
         console.log(error);
         this.invalidRequest();
+        this.setState({
+          gettingPosts: false,
+        });
       });
   }
   onSubmit(e) {
@@ -117,7 +127,7 @@ export default class EditPostPage extends Component {
       .post(`${backendAddress()}/posts/update/` + this.state.postid, post)
       .then((res) => {
         console.log(res.data);
-        this.props.history.push("/");
+        this.props.history.push("/forum/" + this.state.forums.find(forum => forum._id == this.state.forumid).name);
       })
       .catch((error) => {
         console.log("Error: " + error);
@@ -158,16 +168,17 @@ export default class EditPostPage extends Component {
   }
 
   render() {
+    if(this.state.gettingPosts || this.state.gettingForums) return null;
     return (
       <EditPost
         currentForum={this.state.forumid}
         handleForumChange={this.onChangeForum}
-        forums={this.state.forms}
+        forums={this.state.forums}
         handleHeaderChange={this.onChangeTitle}
         header={this.state.title}
         handleBodyChange={this.onChangeBody}
         body={this.state.body}
-        submitBtn="Create Post"
+        submitBtn="Update Post"
         SubmitError={this.state.submitError}
         handleSubmit={this.onSubmit}
       />
