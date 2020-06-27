@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import _ from 'lodash';
 
 import backendAddress from "../helpers/backend-address";
 import EditForum from "./sub/edit-forum.sub.component";
@@ -61,6 +62,7 @@ export default class EditForumPage extends Component {
     });
     if (authenticationService.currentUserValue._id != this.state.userid) {
       this.invalidRequest();
+      return;
     }
 
     this.validateName().finally(() => {
@@ -88,7 +90,7 @@ export default class EditForumPage extends Component {
         .post(`${backendAddress()}/forums/update/` + this.state.forumid, forum)
         .then((res) => {
           console.log(res.data);
-          this.props.history.push("/");
+          this.props.history.push("/forum/" + this.state.name);
         })
         .catch((error) => {
           console.log("Error: " + error);
@@ -113,7 +115,7 @@ export default class EditForumPage extends Component {
 
   async validateName() {
     var isAvailable = false;
-    axios
+    return axios
       .get(`${backendAddress()}/forums/check/` + this.state.name)
       .then((res) => (isAvailable = res.data.isAvailable))
       .catch((error) => {
@@ -122,7 +124,7 @@ export default class EditForumPage extends Component {
       })
       .finally(() => {
         this.setState({
-          validForumName: this.state.name.length > 0 && isAvailable,
+          validForumName: (this.state.name.length > 0 && isAvailable) || _.isEqual(this.state.name,this.state.oldname),
         });
       });
   }

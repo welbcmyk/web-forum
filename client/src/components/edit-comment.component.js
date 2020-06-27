@@ -58,6 +58,7 @@ export default class EditCommentPage extends Component {
     });
     if (authenticationService.currentUserValue._id != this.state.userid) {
       this.invalidRequest();
+      return;
     }
 
     if (!this.validateBody) {
