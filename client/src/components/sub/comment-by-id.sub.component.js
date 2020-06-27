@@ -96,7 +96,7 @@ class Comment extends Component {
                     body={this.state.body}
                     editComment={this.editComment}
                     showUser={this.showUser}
-                    ownComment={this.state.userid == authenticationService.currentUserValue._id}
+                    ownComment={authenticationService.isLoggedIn() ? this.state.userid == authenticationService.currentUserValue._id : false}
                     deleteComment={this.handleShowDeletePopUp}
                 />
                 <Modal

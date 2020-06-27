@@ -105,7 +105,7 @@ class NavbarComp extends Component {
   }
 
   loggedIn() {
-    return authenticationService.currentUserValue;
+    return authenticationService.isLoggedIn();
   }
 
   logUserOut() {

@@ -22,11 +22,10 @@ export default class ChangePassword extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-        console.log(authenticationService.currentUserValue);
         this.setState({
             submitError: ""
         })
-        if(!authenticationService.currentUserValue){
+        if(!authenticationService.isLoggedIn()){
             this.props.history.push("/");
             return;
         }

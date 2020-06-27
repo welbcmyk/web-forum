@@ -87,7 +87,7 @@ class Forum extends Component {
               username={this.state.username}
               onClickForum={this.props.onClickForum}
               showUser={this.showUser}
-              showEdit={this.state.userid == authenticationService.currentUserValue._id}
+              showEdit={authenticationService.isLoggedIn() ? this.state.userid == authenticationService.currentUserValue._id : false}
               editForum={this.editForum}
               onClickPost={this.addPost}
             />

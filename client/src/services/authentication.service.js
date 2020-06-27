@@ -1,6 +1,7 @@
 import { BehaviorSubject } from "rxjs";
 import axios from "axios";
 import backendAddress from "../helpers/backend-address";
+import _ from 'lodash';
 
 import { handleResponse } from "../helpers";
 
@@ -11,6 +12,7 @@ const currentUserSubject = new BehaviorSubject(
 export const authenticationService = {
   login,
   logout,
+  isLoggedIn,
   currentUser: currentUserSubject.asObservable(),
   get currentUserValue() {
     return currentUserSubject.value;
@@ -35,6 +37,13 @@ function login(username, password) {
 
       return userDB;
     });
+}
+
+function isLoggedIn(userid){
+  if(authenticationService.currentUserValue){
+    return _.each(authenticationService.currentUserValue._id, userid);
+  }
+  return false;
 }
 
 function logout() {

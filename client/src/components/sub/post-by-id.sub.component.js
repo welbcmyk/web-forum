@@ -144,8 +144,8 @@ class PostId extends Component {
                 title={this.state.title}
                 body={this.state.body}
                 commentCount={this.state.commentCount}
-                showEdit={this.state.userid == authenticationService.currentUserValue._id}
-                showDelete={this.state.userid == authenticationService.currentUserValue._id}
+                showEdit={authenticationService.isLoggedIn() ? this.state.userid == authenticationService.currentUserValue._id : false }
+                showDelete={authenticationService.isLoggedIn() ? this.state.userid == authenticationService.currentUserValue._id : false}
                 onPostEdit={this.editPost}
                 onPostDelete={this.handleShowDeletePopUp}
                 onClickPost={this.props.onClickPost}
