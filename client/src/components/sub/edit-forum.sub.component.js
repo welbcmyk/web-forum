@@ -19,7 +19,7 @@ function EditForum(props) {
       <Form.Group>
         <Form.Control
           required
-          type="text"
+          as="textarea"
           placeholder="Description"
           rows="5"
           onChange={props.handleDescriptionChange}

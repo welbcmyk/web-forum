@@ -36,7 +36,7 @@ function EditPost(props) {
       <Form.Group>
         <Form.Control
           required
-          type="text"
+          as="textarea"
           placeholder="Body"
           rows="5"
           onChange={props.handleBodyChange}
