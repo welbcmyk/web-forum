@@ -138,7 +138,7 @@ class NavbarComp extends Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Brand href="/">
             <img
-              class="rounded"
+              className="rounded"
               src={logo}
               width="30"
               height="30"

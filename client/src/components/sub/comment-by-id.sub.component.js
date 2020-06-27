@@ -27,6 +27,7 @@ export default class Comment extends Component {
                 userid: response.data.user,
             })
         })
+        .catch(err => console.log(err))
         .finally(() => {
             axios
             .get(`${backendAddress()}/user/` + this.state.userid)

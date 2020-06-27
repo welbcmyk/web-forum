@@ -41,7 +41,6 @@ export default class HomeFeed extends Component {
 
   commentList() {
     return this.state.comments.map((currentComment) => {
-      console.log("comment: " + JSON.stringify(currentComment));
       return (
         <Comment
           id={currentComment._id}
