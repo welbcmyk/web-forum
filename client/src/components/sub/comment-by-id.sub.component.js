@@ -15,6 +15,7 @@ class Comment extends Component {
         this.handleCloseDeletePopUp = this.handleCloseDeletePopUp.bind(this);
         this.handleShowDeletePopUp = this.handleShowDeletePopUp.bind(this);
         this.deleteComment = this.deleteComment.bind(this);
+        this.editComment = this.editComment.bind(this);
 
         this.state = {
             id: "",
@@ -63,11 +64,7 @@ class Comment extends Component {
 
     editComment(e){
         e.stopPropagation();
-        this.props.history.push("/edit/comment/" + this.state._id);
-    }
-
-    editComment(e){
-        e.stopPropagation();
+        this.props.history.push("/edit/comment/" + this.state.id);
     }
 
     handleCloseDeletePopUp() {

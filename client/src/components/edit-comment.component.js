@@ -80,7 +80,7 @@ export default class EditCommentPage extends Component {
       )
       .then((res) => {
         console.log(res.data);
-        this.props.history.push("/");
+        this.props.history.push("/post/" + this.state.postid);
       })
       .catch((error) => {
         console.log(error);
