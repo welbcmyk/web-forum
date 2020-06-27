@@ -7,8 +7,11 @@ function Comment(props) {
     <Card>
       <Card.Body>
         <div>
+          <div class="text-muted small" onClick={props.showUser}>
+            {props.userName}
+          </div>
           <div class="text-muted small">
-            {props.userName} {props.date}
+            {props.date}
           </div>
           <div style={{height:"auto", width:"50rem"}}>{props.body}</div>
           <div>

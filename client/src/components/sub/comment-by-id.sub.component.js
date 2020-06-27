@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import axios from "axios";
 import backendAddress from "../../helpers/backend-address";
+import { withRouter } from "react-router-dom";
 
 import CommentComp from "./comment.sub.component";
 
-export default class Comment extends Component {
+class Comment extends Component {
     constructor(props){
         super(props);
 
+        this.showUser = this.showUser.bind(this);
         this.state = {
             id: "",
             userid: "",
@@ -47,6 +49,11 @@ export default class Comment extends Component {
         });
     }
 
+    showUser(e) {
+      e.stopPropagation ();
+      this.props.history.push("/user/" + this.state.username);
+    }
+
     render(){
         return (
           <CommentComp
@@ -55,7 +62,10 @@ export default class Comment extends Component {
             date={this.state.date}
             body={this.state.body}
             editComment={() => this.props.history.push("/comment/edit/" + this.state._id)}
+            showUser={this.showUser}
           />
         );
     }
 }
+
+export default withRouter(Comment);
