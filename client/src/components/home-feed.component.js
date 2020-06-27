@@ -40,6 +40,7 @@ export default class HomeFeed extends Component {
       return (
         <PostComp
           id={currentPost._id}
+          key={currentPost._id}
           onClickPost={() => {this.props.history.push("/post/"+currentPost._id)}}
         />
       );
