@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-import PostComp from "./sub/post.sub.component";
+import PostComp from "./sub/post-by-id.sub.component";
 import backendAddress from "../helpers/backend-address";
 import { authenticationService } from "../services/authentication.service";
 import EmptyPage from "./sub/empty.sub.component";
@@ -25,35 +25,37 @@ export default class HomeFeed extends Component {
 
   componentDidMount() {
     axios
-      .get(backendAddress() + "/user/" + this.props.match.params.name)
+      .get(backendAddress() + "/user/name/" + this.props.match.params.name)
       .then((response) => {
         this.setState({
           username: response.data.username,
           id: response.data._id,
-          joinDate: response.data.data,
+          joinDate: response.data.date,
         });
       })
       .catch((error) => {
         console.log(error);
-      });
-
-    axios
-      .get(backendAddress() + "/posts/user/" + this.props.match.params.name)
-      .then((response) => {
-        this.setState({
-          posts: response.data,
-          gettingData: false
+      })
+      .finally(() => {
+        axios
+        .get(backendAddress() + "/posts/user/" + this.state.id)
+        .then((response) => {
+          this.setState({
+            posts: response.data,
+            gettingData: false
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+          this.setState({
+            gettingData: false
+          });
         });
       })
-      .catch((error) => {
-        console.log(error);
-        this.setState({
-          gettingData: false
-        });
-      });
   }
-
+      
   postList() {
+    if(this.state.gettingData) return null;
     return this.state.posts.map((currentPost) => {
       return (
         <PostComp
