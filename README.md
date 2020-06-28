@@ -12,4 +12,4 @@ needs nodejs and npm
  - Client: npm start
  - backend: node server.js
 
-Client runs on port 3000 and backend on 5000. The Database cloud based.
+Client runs on port 3000 and backend on 5000. The Database is cloud based.
